@@ -5,7 +5,7 @@
 
         "test:dev": "deno task test --reporter=dot --watch",
         "test": "deno test --env-file=.env.development --allow-all ./tests/",
-        "fmt": "deno fmt --config=deno.jsonc",
+        "fmt": "deno fmt --config=deno.jsonc ./src ./tests",
         "lint": "deno lint --config=deno.jsonc ./src ./tests",
 
         // Coverage report configs, NEEDS lcov package on system
