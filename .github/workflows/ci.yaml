@@ -25,11 +25,11 @@ jobs:
               with:
                   deno-version: v2.x
 
-            - name: Verificando formatação do código
-              run: deno task fmt
-
             - name: Adicionando dependencia manual
               run: deno install --allow-scripts=npm:protobufjs@7.4.0
+
+            - name: Verificando formatação do código
+              run: deno task fmt
 
             - name: Verificando linter
               run: deno task lint
