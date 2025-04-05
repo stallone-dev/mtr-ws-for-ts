@@ -1,0 +1,29 @@
+// Folder-specific settings
+//
+// For a full list of overridable settings, and general information on folder-specific settings,
+// see the documentation: https://zed.dev/docs/configuring-zed#settings-files
+{
+    "show_edit_predictions": false,
+
+    "format_on_save": "on",
+    "show_wrap_guides": true,
+    "preferred_line_length": 120,
+    "soft_wrap": "editor_width",
+
+    "languages": {
+        "TypeScript": {
+            "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
+            "formatter": "language_server"
+        }
+    },
+
+    "lsp": {
+        "deno": {
+            "settings": {
+                "deno": {
+                    "enable": true
+                }
+            }
+        }
+    }
+}
