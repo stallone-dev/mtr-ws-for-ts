@@ -5,6 +5,8 @@
 
         "test:dev": "deno task test --reporter=dot --watch",
         "test": "deno test --env-file=.env.development --allow-all ./tests/",
+        "fmt": "deno fmt --config=deno.jsonc",
+        "lint": "deno lint --config=deno.jsonc ./src ./tests",
 
         // Coverage report configs, NEEDS lcov package on system
         "coverage:report": "deno task coverage ; deno coverage ./tests/coverage-log --lcov > ./tests/coverage-log/coverage.lcov ; genhtml -o ./tests/coverage-log ./tests/coverage-log/coverage.lcov",
@@ -19,8 +21,8 @@
 
         // Testing packages
         // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests
-        "@expect": "jsr:@std/expect@>=1.0",
-        "@testing": "jsr:@std/testing@>=1.0",
+        "@expect": "jsr:@std/expect@^1.0",
+        "@testing": "jsr:@std/testing@^1.0",
 
         // Dependencies
         "@zod": "npm:zod@^3.24.2",
