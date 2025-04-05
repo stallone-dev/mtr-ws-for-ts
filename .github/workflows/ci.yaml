@@ -28,6 +28,9 @@ jobs:
             - name: Verificando formatação do código
               run: deno fmt --check
 
+            - name: Adicionando dependencia manual
+              run: deno install --allow-scripts=npm:protobufjs@7.4.0
+
             - name: Verificando linter
               run: deno lint
 

@@ -40,8 +40,8 @@
     "license": "MPL-2.0",
 
     "publish": {
-        "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".env*"],
-        "include": [".env.example"]
+        "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".zed", ".env*"],
+        "include": [".env.development"]
     },
 
     // ======= Source code standardization area =======
