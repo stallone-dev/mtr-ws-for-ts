@@ -14,12 +14,6 @@ jobs:
             - name: Checkout do código
               uses: actions/checkout@v4
 
-            - name: Cache Deno dependencies
-              uses: actions/cache@v4
-              with:
-                  path: ${{ env.DENO_DIR }}
-                  key: ${{ hashFiles('deno.lock') }}
-
             - name: Configurar Deno
               uses: denoland/setup-deno@v2
               with:
@@ -27,9 +21,6 @@ jobs:
 
             - name: Verificando formatação do código
               run: deno fmt --check
-
-            - name: Cache dependencies
-              run: deno cache .
 
             - name: Verificando linter
               run: deno lint
