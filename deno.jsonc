@@ -17,9 +17,10 @@
     // ======= Dependency area =======
     "imports": {
         // Relative local imports
-        "~logger": "./src/config/logger.ts",
-        "~otel": "./src/config/opentelemetry.ts",
-        "~features": "./src/features/_index.ts",
+        "~logger": "./src/configs/logger.ts",
+        "~telemetry": "./src/configs/telemetry.ts",
+        "~service": "./src/services/main.service.ts",
+        "~type/": "./src/types/",
 
         // Testing packages
         // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests
@@ -35,6 +36,9 @@
     // Unstable features from DenoJS
     "unstable": ["otel"],
     "nodeModulesDir": "auto",
+    "compilerOptions": {
+        "lib": ["dom", "esnext"]
+    },
 
     // ======= JSR publish area =======
     "name": "mtr-ws-for-ts",
