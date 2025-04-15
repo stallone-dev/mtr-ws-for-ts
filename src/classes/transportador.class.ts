@@ -16,8 +16,8 @@ export { TransportadorClient };
 class TransportadorClient extends BaseMtrWsClient {
     constructor(config: WsClientConfig) {
         super(config);
-        if (this.role !== "DESTINADOR") {
-            throw new Error("Incompatible role for GeradorClient");
+        if (this.role !== "TRANSPORTADOR") {
+            throw new Error("Incompatible role for TransportadorClient");
         }
     }
 

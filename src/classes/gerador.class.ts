@@ -16,7 +16,7 @@ export { GeradorClient };
 class GeradorClient extends BaseMtrWsClient {
     constructor(config: WsClientConfig) {
         super(config);
-        if (this.role !== "DESTINADOR") {
+        if (this.role !== "GERADOR") {
             throw new Error("Incompatible role for GeradorClient");
         }
     }

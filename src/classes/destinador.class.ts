@@ -17,7 +17,7 @@ class DestinadorClient extends BaseMtrWsClient {
     constructor(config: WsClientConfig) {
         super(config);
         if (this.role !== "DESTINADOR") {
-            throw new Error("Incompatible role for GeradorClient");
+            throw new Error("Incompatible role for DestinadorClient");
         }
     }
 
