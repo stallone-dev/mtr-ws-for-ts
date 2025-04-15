@@ -1,4 +1,9 @@
-// Create by Stallone L. de Souza (@stallone-dev) - 2025 - License: MPL-2.0
+/*
+ * Copyright (c) 2025, Stallone L. de Souza (@stallone-dev)
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
 
 import type { WsClientConfig } from "~type/ws_config.type.ts";
 import { BaseMtrWsClient } from "~class/base.class.ts";
