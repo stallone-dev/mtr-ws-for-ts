@@ -11,7 +11,7 @@
         // Coverage report configs, NEEDS lcov package on system
         "coverage:report": "deno task coverage ; deno coverage ./tests/coverage-log --lcov > ./tests/coverage-log/coverage.lcov ; genhtml -o ./tests/coverage-log ./tests/coverage-log/coverage.lcov",
         "coverage:dev": "deno task coverage ; deno coverage ./tests/coverage-log",
-        "coverage": "deno task test --reporter=dot --coverage=./coverage-log"
+        "coverage": "deno task test --reporter=dot --coverage=./coverage-log",
     },
 
     // ======= Dependency area =======
@@ -27,21 +27,21 @@
         // Testing packages
         // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests
         "@expect": "jsr:@std/expect@^1.0",
-        "@testing": "jsr:@std/testing@^1.0",
+        "@testing": "jsr:@std/testing/bdd",
 
         // Dependencies
         "@zod": "npm:zod@^3.24.2",
         "@logtape": "jsr:@logtape/logtape@^0.9.0",
         "@opentelemetry": "npm:@opentelemetry/api@^1.9.0",
-        "@ulid": "jsr:@std/ulid@^1.0.0"
+        "@ulid": "jsr:@std/ulid@^1.0.0",
     },
 
     // Unstable features from DenoJS
     "unstable": ["otel"],
     "nodeModulesDir": "auto",
-    "compilerOptions": {
-        "lib": ["dom", "esnext"]
-    },
+    // "compilerOptions": {
+    //     "lib": ["dom", "esnext"]
+    // },
 
     // ======= JSR publish area =======
     "name": "mtr-ws-for-ts",
@@ -51,7 +51,7 @@
 
     "publish": {
         "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".zed", ".env*"],
-        "include": [".env.development"]
+        "include": [".env.development"],
     },
 
     // ======= Source code standardization area =======
@@ -64,7 +64,7 @@
         "useTabs": false,
         "semiColons": true,
         "singleQuote": false,
-        "proseWrap": "preserve"
+        "proseWrap": "preserve",
     },
 
     // Linter for
@@ -96,8 +96,8 @@
                 "no-useless-rename",
                 "single-var-declarator",
                 "triple-slash-reference",
-                "verbatim-module-syntax"
-            ]
-        }
-    }
+                "verbatim-module-syntax",
+            ],
+        },
+    },
 }
