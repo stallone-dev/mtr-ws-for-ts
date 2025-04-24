@@ -24,7 +24,7 @@ function parseApiResponse<T>(
         );
     }
 
-    return JSON.parse(parsed.data as string);
+    return parsed.data;
 }
 
 function parseApiInput<T>(
