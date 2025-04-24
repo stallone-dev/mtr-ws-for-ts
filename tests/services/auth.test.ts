@@ -17,7 +17,7 @@ describe("[AUTH]", () => {
 
     before(() => {
         const env = Deno.env.toObject();
-        loginMock.cpfCnpj = env.SINIR_CPF_CNPJ;
+        loginMock.cpfCnpj = env.SINIR_CPF_ADMIN;
         loginMock.senha = env.SINIR_PASSWORD;
         loginMock.unidade = env.SINIR_UNIDADE;
     });
