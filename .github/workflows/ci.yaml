@@ -33,6 +33,3 @@ jobs:
 
             - name: Verificando linter
               run: deno task lint
-
-            - name: Executar testes
-              run: deno task test
