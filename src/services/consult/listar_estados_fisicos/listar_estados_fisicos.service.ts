@@ -10,16 +10,16 @@ import type { WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type ListarClassesResponseDTO,
-    ListarClassesResponseSchema,
-} from "~service/consult/listar_classes/listar_classes.dto.ts";
+    type ListarEstadosFisicosDTO,
+    ListarEstadosFisicosSchema,
+} from "~service/consult/listar_estados_fisicos/listar_estados_fisicos.dto.ts";
 
-export { listarClassesMethod };
+export { listarEstadosFisicosMethod };
 
-async function listarClassesMethod(
+async function listarEstadosFisicosMethod(
     ctx: WsMethodContext,
-): Promise<ListarClassesResponseDTO> {
-    const endpoint = `${ctx.baseUrl}/retornaListaClasse`;
+): Promise<ListarEstadosFisicosDTO> {
+    const endpoint = `${ctx.baseUrl}/retornaListaEstadoFisico`;
     const response = await fetch(endpoint, {
         method: "GET",
         headers: {
@@ -28,9 +28,9 @@ async function listarClassesMethod(
         },
     });
 
-    const response_data = await response.json() as WsResponseModel<ListarClassesResponseDTO>;
+    const response_data = await response.json() as WsResponseModel<ListarEstadosFisicosDTO>;
 
-    const result = parseApiResponse(ListarClassesResponseSchema, response_data, endpoint);
+    const result = parseApiResponse(ListarEstadosFisicosSchema, response_data, endpoint);
 
     return result;
 }
