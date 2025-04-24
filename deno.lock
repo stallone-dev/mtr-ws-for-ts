@@ -1,32 +1,30 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@logtape/logtape@0.9": "0.9.0",
-    "jsr:@std/assert@^1.0.11": "1.0.12",
+    "jsr:@logtape/logtape@~0.9.1": "0.9.1",
     "jsr:@std/assert@^1.0.12": "1.0.12",
-    "jsr:@std/expect@1": "1.0.13",
-    "jsr:@std/internal@^1.0.5": "1.0.6",
+    "jsr:@std/expect@1": "1.0.15",
     "jsr:@std/internal@^1.0.6": "1.0.6",
     "jsr:@std/testing@*": "1.0.11",
     "jsr:@std/ulid@1": "1.0.0",
     "npm:@opentelemetry/api@^1.9.0": "1.9.0",
-    "npm:zod@^3.24.2": "3.24.2"
+    "npm:zod@^3.24.2": "3.24.3"
   },
   "jsr": {
-    "@logtape/logtape@0.9.0": {
-      "integrity": "aacdeb0e040e5723021bef8b9b8c03ad7cffb5e2146a0024c30814930f6e7c89"
+    "@logtape/logtape@0.9.1": {
+      "integrity": "0dc55c64be7b6ead27fb4c610c4b4b003dec8f4714bb1b1fe06c9da4cd15a770"
     },
     "@std/assert@1.0.12": {
       "integrity": "08009f0926dda9cbd8bef3a35d3b6a4b964b0ab5c3e140a4e0351fbf34af5b9a",
       "dependencies": [
-        "jsr:@std/internal@^1.0.6"
+        "jsr:@std/internal"
       ]
     },
-    "@std/expect@1.0.13": {
-      "integrity": "d8e236c7089cd9fcf5e6032f27dadc3db6349d0aee48c15bc71d717bca5baa42",
+    "@std/expect@1.0.15": {
+      "integrity": "eca360007b5a7f13dbfa1294224baee7fb98dcd460d8461fe64eeae302902945",
       "dependencies": [
-        "jsr:@std/assert@^1.0.11",
-        "jsr:@std/internal@^1.0.5"
+        "jsr:@std/assert",
+        "jsr:@std/internal"
       ]
     },
     "@std/internal@1.0.6": {
@@ -35,8 +33,8 @@
     "@std/testing@1.0.11": {
       "integrity": "12b3db12d34f0f385a26248933bde766c0f8c5ad8b6ab34d4d38f528ab852f48",
       "dependencies": [
-        "jsr:@std/assert@^1.0.12",
-        "jsr:@std/internal@^1.0.6"
+        "jsr:@std/assert",
+        "jsr:@std/internal"
       ]
     },
     "@std/ulid@1.0.0": {
@@ -47,13 +45,13 @@
     "@opentelemetry/api@1.9.0": {
       "integrity": "sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg=="
     },
-    "zod@3.24.2": {
-      "integrity": "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ=="
+    "zod@3.24.3": {
+      "integrity": "sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg=="
     }
   },
   "workspace": {
     "dependencies": [
-      "jsr:@logtape/logtape@0.9",
+      "jsr:@logtape/logtape@~0.9.1",
       "jsr:@std/expect@1",
       "jsr:@std/testing@*",
       "jsr:@std/ulid@1",

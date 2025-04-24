@@ -4,14 +4,14 @@
         "dev": "",
 
         "test:dev": "deno task test --reporter=dot --watch",
-        "test": "deno test --env-file=.env.development --allow-all ./tests/",
+        "test": "deno test --env-file=.env --allow-all ./tests/",
         "fmt": "deno fmt --config=deno.jsonc ./src ./tests",
         "lint": "deno lint --config=deno.jsonc ./src ./tests",
 
         // Coverage report configs, NEEDS lcov package on system
         "coverage:report": "deno task coverage ; deno coverage ./tests/coverage-log --lcov > ./tests/coverage-log/coverage.lcov ; genhtml -o ./tests/coverage-log ./tests/coverage-log/coverage.lcov",
         "coverage:dev": "deno task coverage ; deno coverage ./tests/coverage-log",
-        "coverage": "deno task test --reporter=dot --coverage=./coverage-log",
+        "coverage": "deno task test --reporter=dot --coverage=./coverage-log"
     },
 
     // ======= Dependency area =======
@@ -27,13 +27,13 @@
         // Testing packages
         // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests
         "@expect": "jsr:@std/expect@^1.0",
-        "@testing": "jsr:@std/testing/bdd",
+        "@testing": "jsr:@std/testing",
 
         // Dependencies
         "@zod": "npm:zod@^3.24.2",
-        "@logtape": "jsr:@logtape/logtape@^0.9.0",
+        "@logtape": "jsr:@logtape/logtape@^0.9.1",
         "@opentelemetry": "npm:@opentelemetry/api@^1.9.0",
-        "@ulid": "jsr:@std/ulid@^1.0.0",
+        "@ulid": "jsr:@std/ulid@^1.0.0"
     },
 
     // Unstable features from DenoJS
@@ -51,7 +51,7 @@
 
     "publish": {
         "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".zed", ".env*"],
-        "include": [".env.development"],
+        "include": [".env.development"]
     },
 
     // ======= Source code standardization area =======
@@ -64,7 +64,7 @@
         "useTabs": false,
         "semiColons": true,
         "singleQuote": false,
-        "proseWrap": "preserve",
+        "proseWrap": "preserve"
     },
 
     // Linter for
@@ -96,8 +96,8 @@
                 "no-useless-rename",
                 "single-var-declarator",
                 "triple-slash-reference",
-                "verbatim-module-syntax",
-            ],
-        },
-    },
+                "verbatim-module-syntax"
+            ]
+        }
+    }
 }
