@@ -4,7 +4,7 @@
         "dev": "",
 
         "test:dev": "deno task test --reporter=dot --watch",
-        "test": "deno test --env-file=.env.development --allow-all ./tests/",
+        "test": "deno test --env-file=.env --allow-all ./tests/",
         "fmt": "deno fmt --config=deno.jsonc ./src ./tests",
         "lint": "deno lint --config=deno.jsonc ./src ./tests",
 
@@ -17,23 +17,31 @@
     // ======= Dependency area =======
     "imports": {
         // Relative local imports
-        // "~path/": "./path/to/src/folder",
+        "~logger": "./src/configs/logger.ts",
+        "~telemetry": "./src/configs/telemetry.ts",
+        "~service/": "./src/services/",
+        "~type/": "./src/types/",
+        "~class/": "./src/classes/",
+        "~util/": "./src/utils/",
 
         // Testing packages
         // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests
         "@expect": "jsr:@std/expect@^1.0",
-        "@testing": "jsr:@std/testing@^1.0",
+        "@testing": "jsr:@std/testing",
 
         // Dependencies
         "@zod": "npm:zod@^3.24.2",
-        "@logtape": "jsr:@logtape/logtape@^0.9.0",
-        "@logtape/otel": "jsr:@logtape/otel@^0.3.0",
-        "@opentelemetry": "npm:@opentelemetry/api@^1.9.0"
+        "@logtape": "jsr:@logtape/logtape@^0.9.1",
+        "@opentelemetry": "npm:@opentelemetry/api@^1.9.0",
+        "@ulid": "jsr:@std/ulid@^1.0.0"
     },
 
     // Unstable features from DenoJS
     "unstable": ["otel"],
     "nodeModulesDir": "auto",
+    // "compilerOptions": {
+    //     "lib": ["dom", "esnext"]
+    // },
 
     // ======= JSR publish area =======
     "name": "mtr-ws-for-ts",
