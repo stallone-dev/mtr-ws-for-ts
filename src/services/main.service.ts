@@ -9,11 +9,13 @@ import type { WsBaseURL } from "~type/ws_config.type.ts";
 
 export { methodTemplate, type TemplateResponseDTO, WsAuth };
 
-const WsAuth = async (baseUrl: WsBaseURL, login: AuthRequestDTO) =>
+const WsAuth = async (baseUrl: WsBaseURL, login: AuthRequestDTO, userPersistentId?: string) =>
     await FnWithInstrumentation(
         () => authMethod({ token: "", baseUrl }, login),
         {
             sessionId: "",
+            userPersistentId: userPersistentId ?? "",
+            userRole: "AUTH",
             spanName: "AuthMethod",
         },
         { unidade: login.unidade },

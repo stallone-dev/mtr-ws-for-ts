@@ -9,6 +9,7 @@ import type { WsMethodContext } from "~type/method_config.type.ts";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import { type AuthRequestDTO, AuthRequestSchema, type AuthResponseDTO, AuthResponseSchema } from "./auth.dto.ts";
+import type { WsResponseModel } from "~type/ws_config.type.ts";
 
 export { authMethod };
 
@@ -28,16 +29,7 @@ async function authMethod(
         body: input,
     });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-            `Erro na requisição para ${endpoint}: Status ${response.status} - ${response.statusText}. Resposta da API: ${
-                JSON.stringify(errorData)
-            }`,
-        );
-    }
-
-    const response_data = await (await response.json()).objetoResposta;
+    const response_data = await response.json() as WsResponseModel<AuthResponseDTO>;
 
     const result = parseApiResponse(AuthResponseSchema, response_data, endpoint);
 
