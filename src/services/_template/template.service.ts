@@ -6,7 +6,8 @@
  */
 
 import type { WsMethodContext } from "~type/method_config.type.ts";
-import { type TemplateResponseDTO, TemplateResponseSchema } from "./template.dto.ts";
+import { TemplateRequestSchema, type TemplateResponseDTO, TemplateResponseSchema } from "./template.dto.ts";
+import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 export { methodTemplate };
 
@@ -14,6 +15,8 @@ async function methodTemplate(
     ctx: WsMethodContext,
     anything: string,
 ): Promise<TemplateResponseDTO> {
+    const _input = parseApiInput(TemplateRequestSchema, anything);
+
     const endpoint = `${ctx.baseUrl}/[ENDPOINT]/${anything}`;
     const response = await fetch(endpoint, {
         method: "GET",
@@ -21,6 +24,7 @@ async function methodTemplate(
             "Authorization": `Bearer ${ctx.token}`,
             "Content-Type": "application/json",
         },
+        // body: _input
     });
 
     if (!response.ok) {
@@ -32,16 +36,8 @@ async function methodTemplate(
         );
     }
 
-    const data = await response.json();
+    const response_data = await response.json();
+    const result = parseApiResponse(TemplateResponseSchema, response_data, endpoint);
 
-    const parsed = TemplateResponseSchema.safeParse(data);
-    if (!parsed.success) {
-        throw new Error(
-            `Resposta inválida da API para ${endpoint}: ${parsed.error.message}. Dados recebidos: ${
-                JSON.stringify(data)
-            }`,
-        );
-    }
-
-    return parsed.data;
+    return result;
 }

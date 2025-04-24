@@ -7,11 +7,13 @@
 
 import { z } from "@zod";
 
-export { type TemplateResponseDTO, TemplateResponseSchema };
+export { type TemplateRequestDTO, TemplateRequestSchema, type TemplateResponseDTO, TemplateResponseSchema };
 
 type TemplateResponseDTO = z.infer<typeof TemplateResponseSchema>;
+type TemplateRequestDTO = z.infer<typeof TemplateRequestSchema>;
 
 const TemplateResponseSchema = z.object({
-    status: z.string().min(1, "Status is empty"),
+    success: z.boolean(),
     data: z.unknown(),
 });
+const TemplateRequestSchema = z.unknown();
