@@ -6,37 +6,36 @@
  */
 
 import type { WsMethodContext } from "~type/method_config.type.ts";
-import { TemplateRequestSchema, type TemplateResponseDTO, TemplateResponseSchema } from "./template.dto.ts";
+import type { WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
+
+import {
+    type TemplateRequestDTO,
+    TemplateRequestSchema,
+    type TemplateResponseDTO,
+    TemplateResponseSchema,
+} from "./template.dto.ts";
 
 export { methodTemplate };
 
 async function methodTemplate(
     ctx: WsMethodContext,
-    anything: string,
+    anything: TemplateRequestDTO,
 ): Promise<TemplateResponseDTO> {
     const _input = parseApiInput(TemplateRequestSchema, anything);
 
     const endpoint = `${ctx.baseUrl}/[ENDPOINT]/${anything}`;
     const response = await fetch(endpoint, {
-        method: "GET",
+        method: "POST",
         headers: {
-            "Authorization": `Bearer ${ctx.token}`,
+            "Authorization": ctx.token,
             "Content-Type": "application/json",
         },
         // body: _input
     });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-            `Erro na requisição para ${endpoint}: Status ${response.status} - ${response.statusText}. Resposta da API: ${
-                JSON.stringify(errorData)
-            }`,
-        );
-    }
+    const response_data = await response.json() as WsResponseModel<TemplateResponseDTO>;
 
-    const response_data = await response.json();
     const result = parseApiResponse(TemplateResponseSchema, response_data, endpoint);
 
     return result;

@@ -10,11 +10,11 @@ import type { WsResponseModel } from "~type/ws_config.type.ts";
 
 export { parseApiInput, parseApiResponse };
 
-function parseApiResponse<T>(
-    schema: ZodSchema<T>,
+function parseApiResponse<_>(
+    schema: ZodSchema<_>,
     data: WsResponseModel<unknown>,
     endpoint: string,
-): T {
+): _ {
     if (data.erro) {
         const mensagem = JSON.stringify({ mensagem: data.mensagem });
         throw new Error(
@@ -35,8 +35,8 @@ function parseApiResponse<T>(
     return parsed.data;
 }
 
-function parseApiInput<T>(
-    schema: ZodSchema<T>,
+function parseApiInput<_>(
+    schema: ZodSchema<_>,
     data: unknown,
 ): string {
     const parsed = schema.safeParse(data);
