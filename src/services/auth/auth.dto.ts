@@ -12,10 +12,7 @@ export { type AuthRequestDTO, AuthRequestSchema, type AuthResponseDTO, AuthRespo
 type AuthResponseDTO = z.infer<typeof AuthResponseSchema>;
 type AuthRequestDTO = z.infer<typeof AuthRequestSchema>;
 
-const AuthResponseSchema = z.object({
-    status: z.string(),
-    data: z.string().startsWith("Bearer "),
-});
+const AuthResponseSchema = z.string().startsWith("Bearer ");
 
 const AuthRequestSchema = z.object({
     cpfCnpj: z

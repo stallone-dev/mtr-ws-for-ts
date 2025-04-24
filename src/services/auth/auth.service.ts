@@ -7,6 +7,7 @@
 
 import type { WsMethodContext } from "~type/method_config.type.ts";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
+
 import { type AuthRequestDTO, AuthRequestSchema, type AuthResponseDTO, AuthResponseSchema } from "./auth.dto.ts";
 
 export { authMethod };
@@ -36,8 +37,9 @@ async function authMethod(
         );
     }
 
-    const data = await response.json();
-    const result = parseApiResponse(AuthResponseSchema, data, endpoint);
+    const response_data = await (await response.json()).objetoResposta;
+
+    const result = parseApiResponse(AuthResponseSchema, response_data, endpoint);
 
     return result;
 }
