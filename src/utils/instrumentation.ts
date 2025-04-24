@@ -8,6 +8,7 @@
 import { tracer } from "~telemetry";
 import { logger } from "~logger";
 import { ulid } from "@ulid";
+import type { WsUserRole } from "~type/ws_config.type.ts";
 
 export { FnWithInstrumentation };
 
@@ -23,6 +24,8 @@ async function FnWithInstrumentation<T>(
     id: {
         spanName: string;
         sessionId: string;
+        userPersistentId: string;
+        userRole: WsUserRole | "AUTH";
     },
     debugInputContext?: unknown,
 ): Promise<T> {
@@ -30,10 +33,15 @@ async function FnWithInstrumentation<T>(
     const startTime = Date.now();
     const span = tracer.startSpan(id.spanName);
     span.setAttribute("session.id", id.sessionId);
+    span.setAttribute("request.id", requestId);
+    span.setAttribute("user.id", id.userPersistentId);
+    span.setAttribute("user.role", id.userRole);
 
     logger.info(`[${id.spanName}] > Init fn`, {
         event: id.spanName,
         phase: "start",
+        userPersistentId: id.userPersistentId,
+        userRole: id.userRole,
         sessionId: id.sessionId,
         requestId,
         timestamp: new Date(startTime).toISOString(),
@@ -41,6 +49,8 @@ async function FnWithInstrumentation<T>(
     logger.debug(`[${id.spanName}] > Input data`, {
         event: id.spanName,
         phase: "input",
+        userPersistentId: id.userPersistentId,
+        userRole: id.userRole,
         sessionId: id.sessionId,
         requestId,
         data: debugInputContext,
@@ -53,6 +63,8 @@ async function FnWithInstrumentation<T>(
         logger.debug(`[${id.spanName}] > Output data`, {
             event: id.spanName,
             phase: "output",
+            userPersistentId: id.userPersistentId,
+            userRole: id.userRole,
             sessionId: id.sessionId,
             requestId,
             data: result,
@@ -60,6 +72,8 @@ async function FnWithInstrumentation<T>(
         logger.info(`[${id.spanName}] > Finished fn`, {
             event: id.spanName,
             phase: "success",
+            userPersistentId: id.userPersistentId,
+            userRole: id.userRole,
             sessionId: id.sessionId,
             requestId,
             durationMs: duration,
@@ -76,6 +90,8 @@ async function FnWithInstrumentation<T>(
         logger.error(`[${id.spanName}] > Error`, {
             event: id.spanName,
             phase: "error",
+            userPersistentId: id.userPersistentId,
+            userRole: id.userRole,
             sessionId: id.sessionId,
             requestId,
             timestamp: errorTime.toISOString(),

@@ -5,7 +5,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-export { WsBaseURL, type WsClientConfig, type WsUserRole };
+export { WsBaseURL, type WsClientConfig, type WsResponseModel, type WsUserRole };
 
 type WsUserRole = "GERADOR" | "TRANSPORTADOR" | "DESTINADOR";
 
@@ -13,6 +13,14 @@ interface WsClientConfig<R extends WsUserRole = WsUserRole> {
     token: string;
     baseUrl: WsBaseURL;
     role: R;
+    persistentId?: string;
+}
+
+interface WsResponseModel<T> {
+    erro: boolean;
+    mensagem: string;
+    objetoResposta: T;
+    totalRecords: number;
 }
 
 enum WsBaseURL {
