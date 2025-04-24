@@ -23,8 +23,11 @@ class TransportadorClient extends BaseMtrWsClient {
 
     public async methodTemplate(mtrId: string): Promise<TemplateResponseDTO> {
         return await FnWithInstrumentation(
-            "Transportador.methodTemplate",
             () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
+            {
+                sessionId: this.sessionId,
+                spanName: "Transportador.methodTemplate",
+            },
             { mtrId },
         );
     }

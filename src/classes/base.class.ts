@@ -5,6 +5,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
+import { ulid } from "@ulid";
 import type { WsBaseURL, WsClientConfig } from "~type/ws_config.type.ts";
 
 export { BaseMtrWsClient };
@@ -13,10 +14,12 @@ abstract class BaseMtrWsClient {
     protected readonly token: string;
     protected readonly baseUrl: WsBaseURL;
     protected readonly role: string;
+    protected readonly sessionId: string;
 
     constructor(config: WsClientConfig) {
         this.token = config.token;
         this.baseUrl = config.baseUrl;
         this.role = config.role;
+        this.sessionId = ulid();
     }
 }

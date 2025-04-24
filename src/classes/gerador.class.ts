@@ -23,8 +23,11 @@ class GeradorClient extends BaseMtrWsClient {
 
     public async methodTemplate(mtrId: string): Promise<TemplateResponseDTO> {
         return await FnWithInstrumentation(
-            "Gerador.methodTemplate",
             () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
+            {
+                sessionId: this.sessionId,
+                spanName: "Gerador.methodTemplate",
+            },
             { mtrId },
         );
     }
