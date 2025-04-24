@@ -19,24 +19,29 @@ export { FnWithInstrumentation };
  * @param debugInputContext - Input rastreável para debug.
  */
 async function FnWithInstrumentation<T>(
-    spanName: string,
     fn: () => Promise<T>,
+    id: {
+        spanName: string;
+        sessionId: string;
+    },
     debugInputContext?: unknown,
 ): Promise<T> {
     const requestId = ulid();
     const startTime = Date.now();
-    const span = tracer.startSpan(spanName);
-    span.setAttribute("request.id", requestId);
+    const span = tracer.startSpan(id.spanName);
+    span.setAttribute("session.id", id.sessionId);
 
-    logger.info(`[${spanName}] > Init fn`, {
-        event: spanName,
+    logger.info(`[${id.spanName}] > Init fn`, {
+        event: id.spanName,
         phase: "start",
+        sessionId: id.sessionId,
         requestId,
         timestamp: new Date(startTime).toISOString(),
     });
-    logger.debug(`[${spanName}] > Input data`, {
-        event: spanName,
+    logger.debug(`[${id.spanName}] > Input data`, {
+        event: id.spanName,
         phase: "input",
+        sessionId: id.sessionId,
         requestId,
         data: debugInputContext,
     });
@@ -45,15 +50,17 @@ async function FnWithInstrumentation<T>(
         const result = await fn();
         const duration = Date.now() - startTime;
 
-        logger.debug(`[${spanName}] > Output data`, {
-            event: spanName,
+        logger.debug(`[${id.spanName}] > Output data`, {
+            event: id.spanName,
             phase: "output",
+            sessionId: id.sessionId,
             requestId,
             data: result,
         });
-        logger.info(`[${spanName}] > Finished fn`, {
-            event: spanName,
+        logger.info(`[${id.spanName}] > Finished fn`, {
+            event: id.spanName,
             phase: "success",
+            sessionId: id.sessionId,
             requestId,
             durationMs: duration,
         });
@@ -66,9 +73,10 @@ async function FnWithInstrumentation<T>(
         const errorTime = new Date();
         const duration = Date.now() - startTime;
 
-        logger.error(`[${spanName}] > Error`, {
-            event: spanName,
+        logger.error(`[${id.spanName}] > Error`, {
+            event: id.spanName,
             phase: "error",
+            sessionId: id.sessionId,
             requestId,
             timestamp: errorTime.toISOString(),
             durationMs: duration,
