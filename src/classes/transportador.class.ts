@@ -26,6 +26,8 @@ class TransportadorClient extends BaseMtrWsClient {
             () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
             {
                 sessionId: this.sessionId,
+                userPersistentId: this.userPersistentId,
+                userRole: "TRANSPORTADOR",
                 spanName: "Transportador.methodTemplate",
             },
             { mtrId },

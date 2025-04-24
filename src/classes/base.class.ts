@@ -15,11 +15,13 @@ abstract class BaseMtrWsClient {
     protected readonly baseUrl: WsBaseURL;
     protected readonly role: string;
     protected readonly sessionId: string;
+    protected readonly userPersistentId: string;
 
     constructor(config: WsClientConfig) {
         this.token = config.token;
         this.baseUrl = config.baseUrl;
         this.role = config.role;
         this.sessionId = ulid();
+        this.userPersistentId = config.persistentId ?? "";
     }
 }

@@ -26,6 +26,8 @@ class GeradorClient extends BaseMtrWsClient {
             () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
             {
                 sessionId: this.sessionId,
+                userPersistentId: this.userPersistentId,
+                userRole: "GERADOR",
                 spanName: "Gerador.methodTemplate",
             },
             { mtrId },

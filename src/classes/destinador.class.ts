@@ -26,7 +26,9 @@ class DestinadorClient extends BaseMtrWsClient {
             () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
             {
                 sessionId: this.sessionId,
+                userPersistentId: this.userPersistentId,
                 spanName: "Destinador.methodTemplate",
+                userRole: "DESTINADOR",
             },
             { mtrId },
         );
