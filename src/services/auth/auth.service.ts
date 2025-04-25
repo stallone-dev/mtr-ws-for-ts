@@ -17,6 +17,9 @@ async function authMethod(
     ctx: WsMethodContext,
     { cpfCnpj, senha, unidade }: AuthRequestDTO,
 ): Promise<AuthResponseDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const input = parseApiInput(AuthRequestSchema, { cpfCnpj, senha, unidade });
 
     const endpoint = `${ctx.baseUrl}/gettoken/`;
@@ -29,8 +32,12 @@ async function authMethod(
         body: input,
     });
 
-    const response_data = await response.json() as WsResponseModel<AuthResponseDTO>;
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
+    const response_data = await response.json() as WsResponseModel<AuthResponseDTO>;
     const result = parseApiResponse(AuthResponseSchema, response_data, endpoint);
 
     return result;

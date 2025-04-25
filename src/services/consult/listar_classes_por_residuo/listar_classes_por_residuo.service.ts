@@ -22,6 +22,9 @@ async function listarClassesPorResiduoMethod(
     ctx: WsMethodContext,
     residuoId: ListarClassesPorResiduoRequestDTO,
 ): Promise<ListarClassesPorResiduoResponseDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const input = parseApiInput(ListarClassesPorResiduoRequestSchema, residuoId);
 
     const endpoint = `${ctx.baseUrl}/retornaListaClassePorResiduo/${input}`;
@@ -33,8 +36,12 @@ async function listarClassesPorResiduoMethod(
         },
     });
 
-    const response_data = await response.json() as WsResponseModel<ListarClassesPorResiduoResponseDTO>;
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
+    const response_data = await response.json() as WsResponseModel<ListarClassesPorResiduoResponseDTO>;
     const result = parseApiResponse(ListarClassesPorResiduoResponseSchema, response_data, endpoint);
 
     return result;

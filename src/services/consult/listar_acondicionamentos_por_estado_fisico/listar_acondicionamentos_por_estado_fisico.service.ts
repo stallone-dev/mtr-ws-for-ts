@@ -22,6 +22,9 @@ async function listarAcondicionamentosPorEstadoFisicoMethod(
     ctx: WsMethodContext,
     residuoId: ListarAcondicionamentosPorEstadoFisicoRequestDTO,
 ): Promise<ListarAcondicionamentosPorEstadoFisicoResponseDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const input = parseApiInput(ListarAcondicionamentosPorEstadoFisicoRequestSchema, residuoId);
 
     const endpoint = `${ctx.baseUrl}/retornaListaAcondicionamentoPorEstadoFisico/${input}`;
@@ -32,6 +35,11 @@ async function listarAcondicionamentosPorEstadoFisicoMethod(
             "Content-Type": "application/json",
         },
     });
+
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
     const response_data = await response.json() as WsResponseModel<ListarAcondicionamentosPorEstadoFisicoResponseDTO>;
 

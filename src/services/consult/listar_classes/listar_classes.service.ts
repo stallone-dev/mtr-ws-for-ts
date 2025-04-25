@@ -19,6 +19,9 @@ export { listarClassesMethod };
 async function listarClassesMethod(
     ctx: WsMethodContext,
 ): Promise<ListarClassesResponseDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const endpoint = `${ctx.baseUrl}/retornaListaClasse`;
     const response = await fetch(endpoint, {
         method: "GET",
@@ -28,8 +31,12 @@ async function listarClassesMethod(
         },
     });
 
-    const response_data = await response.json() as WsResponseModel<ListarClassesResponseDTO>;
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
+    const response_data = await response.json() as WsResponseModel<ListarClassesResponseDTO>;
     const result = parseApiResponse(ListarClassesResponseSchema, response_data, endpoint);
 
     return result;

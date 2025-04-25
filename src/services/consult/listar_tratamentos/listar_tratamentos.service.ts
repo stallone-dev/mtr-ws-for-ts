@@ -19,6 +19,9 @@ export { listarTratamentosMethod };
 async function listarTratamentosMethod(
     ctx: WsMethodContext,
 ): Promise<ListarTratamentosDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const endpoint = `${ctx.baseUrl}/retornaListaTratamento`;
     const response = await fetch(endpoint, {
         method: "GET",
@@ -28,8 +31,12 @@ async function listarTratamentosMethod(
         },
     });
 
-    const response_data = await response.json() as WsResponseModel<ListarTratamentosDTO>;
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
+    const response_data = await response.json() as WsResponseModel<ListarTratamentosDTO>;
     const result = parseApiResponse(ListarTratamentosSchema, response_data, endpoint);
 
     return result;

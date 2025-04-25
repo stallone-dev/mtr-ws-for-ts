@@ -19,6 +19,9 @@ export { listarResiduosMethod };
 async function listarResiduosMethod(
     ctx: WsMethodContext,
 ): Promise<ListarResiduosDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const endpoint = `${ctx.baseUrl}/retornaListaResiduo`;
     const response = await fetch(endpoint, {
         method: "GET",
@@ -28,8 +31,12 @@ async function listarResiduosMethod(
         },
     });
 
-    const response_data = await response.json() as WsResponseModel<ListarResiduosDTO>;
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
+    const response_data = await response.json() as WsResponseModel<ListarResiduosDTO>;
     const result = parseApiResponse(ListarResiduosSchema, response_data, endpoint);
 
     return result;

@@ -19,6 +19,9 @@ export { listarAcondicionamentosMethod };
 async function listarAcondicionamentosMethod(
     ctx: WsMethodContext,
 ): Promise<ListarAcondicionamentosResponseDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const endpoint = `${ctx.baseUrl}/retornaListaAcondicionamento`;
     const response = await fetch(endpoint, {
         method: "GET",
@@ -28,8 +31,12 @@ async function listarAcondicionamentosMethod(
         },
     });
 
-    const response_data = await response.json() as WsResponseModel<ListarAcondicionamentosResponseDTO>;
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
+    const response_data = (await response.json()) as WsResponseModel<ListarAcondicionamentosResponseDTO>;
     const result = parseApiResponse(ListarAcondicionamentosResponseSchema, response_data, endpoint);
 
     return result;

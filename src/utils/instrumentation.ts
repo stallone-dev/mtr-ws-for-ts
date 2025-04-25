@@ -25,7 +25,7 @@ async function FnWithInstrumentation<T>(
         spanName: string;
         sessionId: string;
         userPersistentId: string;
-        userRole: WsUserRole | "AUTH";
+        userRole: WsUserRole | "AUTH" | "TEST";
     },
     debugInputContext?: unknown,
 ): Promise<T> {

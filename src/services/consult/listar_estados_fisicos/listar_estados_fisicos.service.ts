@@ -19,6 +19,9 @@ export { listarEstadosFisicosMethod };
 async function listarEstadosFisicosMethod(
     ctx: WsMethodContext,
 ): Promise<ListarEstadosFisicosDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const endpoint = `${ctx.baseUrl}/retornaListaEstadoFisico`;
     const response = await fetch(endpoint, {
         method: "GET",
@@ -28,8 +31,12 @@ async function listarEstadosFisicosMethod(
         },
     });
 
-    const response_data = await response.json() as WsResponseModel<ListarEstadosFisicosDTO>;
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
+    const response_data = await response.json() as WsResponseModel<ListarEstadosFisicosDTO>;
     const result = parseApiResponse(ListarEstadosFisicosSchema, response_data, endpoint);
 
     return result;

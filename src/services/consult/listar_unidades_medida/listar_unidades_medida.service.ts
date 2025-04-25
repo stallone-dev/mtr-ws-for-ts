@@ -19,6 +19,9 @@ export { listarUnidadesMedidaMethod as listarClassesMethod };
 async function listarUnidadesMedidaMethod(
     ctx: WsMethodContext,
 ): Promise<ListarUnidadesMedidaDTO> {
+    if (!ctx.baseUrl) throw new Error("Base URL ausente");
+    if (!ctx.token) throw new Error("Token ausente");
+
     const endpoint = `${ctx.baseUrl}/retornaListaUnidade`;
     const response = await fetch(endpoint, {
         method: "GET",
@@ -28,8 +31,12 @@ async function listarUnidadesMedidaMethod(
         },
     });
 
-    const response_data = await response.json() as WsResponseModel<ListarUnidadesMedidaDTO>;
+    if (!response.ok) {
+        const _ = await response.text();
+        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+    }
 
+    const response_data = await response.json() as WsResponseModel<ListarUnidadesMedidaDTO>;
     const result = parseApiResponse(ListarUnidadesMedidaSchema, response_data, endpoint);
 
     return result;
