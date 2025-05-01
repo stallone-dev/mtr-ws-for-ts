@@ -14,8 +14,8 @@ import { methodTemplate, type TemplateResponseDTO } from "~service/main.service.
 export { TransportadorClient };
 
 class TransportadorClient extends BaseMtrWsClient {
-    constructor(config: WsClientConfig) {
-        super(config);
+    constructor(config: WsClientConfig, token: string) {
+        super(config, token);
         if (this.role !== "TRANSPORTADOR") {
             throw new Error("Incompatible role for TransportadorClient");
         }

@@ -13,18 +13,21 @@ import { TransportadorClient } from "~class/transportador.class.ts";
 
 export { createMtrWsClient };
 
-function createMtrWsClient<T extends WsUserRole>(
+async function createMtrWsClient<T extends WsUserRole>(
     config: WsClientConfig<T>,
-): T extends "GERADOR" ? GeradorClient
-    : T extends "DESTINADOR" ? DestinadorClient
-    : TransportadorClient {
+): Promise<
+    T extends "GERADOR" ? GeradorClient
+        : T extends "DESTINADOR" ? DestinadorClient
+        : T extends "TRANSPORTADOR" ? TransportadorClient
+        : never
+> {
     switch (config.role) {
         case "GERADOR":
-            return new GeradorClient(config) as any;
+            return await GeradorClient.create(config) as any;
         case "DESTINADOR":
-            return new DestinadorClient(config) as any;
+            return await DestinadorClient.create(config) as any;
         case "TRANSPORTADOR":
-            return new TransportadorClient(config) as any;
+            return await TransportadorClient.create(config) as any;
         default:
             throw new Error("Role não suportado");
     }

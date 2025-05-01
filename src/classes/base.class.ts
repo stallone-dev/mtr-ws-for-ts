@@ -7,6 +7,7 @@
 
 import { ulid } from "@ulid";
 import type { WsBaseURL, WsClientConfig } from "~type/ws_config.type.ts";
+import { WsAuth } from "~service/main.service.ts";
 
 export { BaseMtrWsClient };
 
@@ -17,11 +18,22 @@ abstract class BaseMtrWsClient {
     protected readonly sessionId: string;
     protected readonly userPersistentId: string;
 
-    constructor(config: WsClientConfig) {
-        this.token = config.token;
-        this.baseUrl = config.baseUrl;
+    protected constructor(config: WsClientConfig, token: string) {
+        this.token = token, this.baseUrl = config.baseUrl;
         this.role = config.role;
         this.sessionId = ulid();
         this.userPersistentId = config.persistentId ?? "";
+    }
+
+    static async create<T extends BaseMtrWsClient>(
+        this: new (params: WsClientConfig, token: string) => T,
+        params: WsClientConfig,
+    ): Promise<T> {
+        const token = await WsAuth(params.baseUrl, {
+            cpfCnpj: String(params.cpf),
+            senha: String(params.senha),
+            unidade: String(params.unidade),
+        });
+        return new this(params, token);
     }
 }

@@ -10,9 +10,11 @@ export { WsBaseURL, type WsClientConfig, type WsResponseModel, type WsUserRole }
 type WsUserRole = "GERADOR" | "TRANSPORTADOR" | "DESTINADOR";
 
 interface WsClientConfig<R extends WsUserRole = WsUserRole> {
-    token: string;
     baseUrl: WsBaseURL;
     role: R;
+    cpf: string;
+    senha: string;
+    unidade: string;
     persistentId?: string;
 }
 
