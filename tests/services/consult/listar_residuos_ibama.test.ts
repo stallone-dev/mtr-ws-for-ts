@@ -37,8 +37,8 @@ describe("[CONSULT] - Residuos IBAMA", () => {
         expect(result).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
-                    tieCodigo: 4,
-                    tieDescricao: "SÓLIDO",
+                    resCodigoIbama: "020404",
+                    resDescricao: "Vinhaça",
                 }),
             ]),
         );

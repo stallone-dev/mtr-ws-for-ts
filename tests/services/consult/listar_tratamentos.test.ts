@@ -8,9 +8,9 @@ import { WsBaseURL } from "~type/ws_config.type.ts";
 import { WsAuth } from "~service/main.service.ts";
 import { instrumentationSupportForTests } from "../../instrument_support.ts";
 
-import { listarClassesMethod } from "~service/consult/listar_classes/listar_classes.service.ts";
+import { listarTratamentosMethod } from "~service/consult/listar_tratamentos/listar_tratamentos.service.ts";
 
-describe("[CONSULT] - Listar classes", () => {
+describe("[CONSULT] - Listar Tratamentos", () => {
     const infoSpy = spy(logger, "info");
     const baseUrl = WsBaseURL.SINIR;
     let token: string;
@@ -32,22 +32,22 @@ describe("[CONSULT] - Listar classes", () => {
     });
 
     it("> Basic request", async () => {
-        const consultTestFn = instrumentationSupportForTests(listarClassesMethod);
+        const consultTestFn = instrumentationSupportForTests(listarTratamentosMethod);
 
         const result = await consultTestFn({ baseUrl, token });
         expect(result).toEqual(
-            expect.arrayContaining([
-                expect.objectContaining({
-                    claCodigo: 32,
-                    claDescricao: "GRUPO B (RSS)",
-                }),
-            ]),
+            expect.arrayContaining(
+                [expect.objectContaining({
+                    traCodigo: 61,
+                    traDescricao: "Triagem e Transbordo",
+                })],
+            ),
         );
         expect(infoSpy.calls.length).toStrictEqual(4);
     });
 
     it("> Invalid token", async () => {
-        const consultTestFn = instrumentationSupportForTests(listarClassesMethod);
+        const consultTestFn = instrumentationSupportForTests(listarTratamentosMethod);
 
         await expect(consultTestFn({ baseUrl, token: "INVALID_TOKEN" }))
             .rejects
@@ -56,7 +56,7 @@ describe("[CONSULT] - Listar classes", () => {
     });
 
     it("> Invalid URL", async () => {
-        const consultTestFn = instrumentationSupportForTests(listarClassesMethod);
+        const consultTestFn = instrumentationSupportForTests(listarTratamentosMethod);
 
         await expect(consultTestFn({ baseUrl: "example.com" as WsBaseURL, token }))
             .rejects
