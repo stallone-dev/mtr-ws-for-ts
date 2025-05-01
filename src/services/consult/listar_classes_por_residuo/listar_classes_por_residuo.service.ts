@@ -27,7 +27,7 @@ async function listarClassesPorResiduoMethod(
 
     const input = parseApiInput(ListarClassesPorResiduoRequestSchema, residuoId);
 
-    const endpoint = `${ctx.baseUrl}/retornaListaClassePorResiduo/${input}`;
+    const endpoint = `${ctx.baseUrl}/retornaListaClassePorResiduo/${input.replace(/"/g, "")}`;
     const response = await fetch(endpoint, {
         method: "GET",
         headers: {

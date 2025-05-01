@@ -14,7 +14,7 @@ import {
     ListarUnidadesMedidaSchema,
 } from "~service/consult/listar_unidades_medida/listar_unidades_medida.dto.ts";
 
-export { listarUnidadesMedidaMethod as listarClassesMethod };
+export { listarUnidadesMedidaMethod };
 
 async function listarUnidadesMedidaMethod(
     ctx: WsMethodContext,
