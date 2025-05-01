@@ -1,5 +1,4 @@
 import { FnWithInstrumentation } from "~util/instrumentation.ts";
-import type { WsUserRole } from "~type/ws_config.type.ts";
 
 export { instrumentationSupportForTests };
 

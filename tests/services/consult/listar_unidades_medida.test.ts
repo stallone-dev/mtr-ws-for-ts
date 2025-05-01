@@ -8,9 +8,9 @@ import { WsBaseURL } from "~type/ws_config.type.ts";
 import { WsAuth } from "~service/main.service.ts";
 import { instrumentationSupportForTests } from "../../instrument_support.ts";
 
-import { listarClassesMethod } from "~service/consult/listar_classes/listar_classes.service.ts";
+import { listarUnidadesMedidaMethod } from "~service/consult/listar_unidades_medida/listar_unidades_medida.service.ts";
 
-describe("[CONSULT] - Listar classes", () => {
+describe("[CONSULT] - Listar Unidades de Medida", () => {
     const infoSpy = spy(logger, "info");
     const baseUrl = WsBaseURL.SINIR;
     let token: string;
@@ -32,22 +32,23 @@ describe("[CONSULT] - Listar classes", () => {
     });
 
     it("> Basic request", async () => {
-        const consultTestFn = instrumentationSupportForTests(listarClassesMethod);
+        const consultTestFn = instrumentationSupportForTests(listarUnidadesMedidaMethod);
 
         const result = await consultTestFn({ baseUrl, token });
         expect(result).toEqual(
-            expect.arrayContaining([
-                expect.objectContaining({
-                    claCodigo: 32,
-                    claDescricao: "GRUPO B (RSS)",
-                }),
-            ]),
+            expect.arrayContaining(
+                [expect.objectContaining({
+                    uniCodigo: 2,
+                    uniDescricao: "Quilograma",
+                    uniSigla: "KG",
+                })],
+            ),
         );
         expect(infoSpy.calls.length).toStrictEqual(4);
     });
 
     it("> Invalid token", async () => {
-        const consultTestFn = instrumentationSupportForTests(listarClassesMethod);
+        const consultTestFn = instrumentationSupportForTests(listarUnidadesMedidaMethod);
 
         await expect(consultTestFn({ baseUrl, token: "INVALID_TOKEN" }))
             .rejects
@@ -56,7 +57,7 @@ describe("[CONSULT] - Listar classes", () => {
     });
 
     it("> Invalid URL", async () => {
-        const consultTestFn = instrumentationSupportForTests(listarClassesMethod);
+        const consultTestFn = instrumentationSupportForTests(listarUnidadesMedidaMethod);
 
         await expect(consultTestFn({ baseUrl: "example.com" as WsBaseURL, token }))
             .rejects
