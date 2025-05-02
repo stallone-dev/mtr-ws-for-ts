@@ -20,12 +20,12 @@ export { listarAcondicionamentosPorEstadoFisicoMethod };
 
 async function listarAcondicionamentosPorEstadoFisicoMethod(
     ctx: WsMethodContext,
-    residuoId: ListarAcondicionamentosPorEstadoFisicoRequestDTO,
+    estadoId: ListarAcondicionamentosPorEstadoFisicoRequestDTO,
 ): Promise<ListarAcondicionamentosPorEstadoFisicoResponseDTO> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
-    const input = parseApiInput(ListarAcondicionamentosPorEstadoFisicoRequestSchema, residuoId);
+    const input = parseApiInput(ListarAcondicionamentosPorEstadoFisicoRequestSchema, estadoId);
 
     const endpoint = `${ctx.baseUrl}/retornaListaAcondicionamentoPorEstadoFisico/${input}`;
     const response = await fetch(endpoint, {

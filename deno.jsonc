@@ -64,7 +64,8 @@
         "useTabs": false,
         "semiColons": true,
         "singleQuote": false,
-        "proseWrap": "preserve"
+        "proseWrap": "preserve",
+        "newLineKind": "lf"
     },
 
     // Linter for
