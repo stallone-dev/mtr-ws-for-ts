@@ -33,7 +33,8 @@
         "@zod": "npm:zod@^3.24.2",
         "@logtape": "jsr:@logtape/logtape@^0.9.1",
         "@opentelemetry": "npm:@opentelemetry/api@^1.9.0",
-        "@ulid": "jsr:@std/ulid@^1.0.0"
+        "@ulid": "jsr:@std/ulid@^1.0.0",
+        "@path": "jsr:@std/path@^1.0.9"
     },
 
     // Unstable features from DenoJS

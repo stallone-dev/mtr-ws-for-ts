@@ -8,9 +8,9 @@ import { WsBaseURL } from "~type/ws_config.type.ts";
 import { WsAuth } from "~service/main.service.ts";
 import { instrumentationSupportForTests } from "../../instrument_support.ts";
 
-import { downloadCDFMethod } from "~service/download/cdf/download_cdf.service.ts";
+import { downloadMTRMethod } from "~service/download/mtr/download_mtr.service.ts";
 
-describe("[DOWNLOAD] - Download CDF", () => {
+describe("[DOWNLOAD] - Download MTR", () => {
     const infoSpy = spy(logger, "info");
     const baseUrl = WsBaseURL.SINIR;
     let token: string;
@@ -31,32 +31,33 @@ describe("[DOWNLOAD] - Download CDF", () => {
         infoSpy.restore();
     });
 
-    it("> Basic request > VALID CDF", async () => {
-        const consultTestFn = instrumentationSupportForTests(downloadCDFMethod);
+    it("> Basic request > VALID MTR", async () => {
+        const consultTestFn = instrumentationSupportForTests(downloadMTRMethod);
 
         const result = await consultTestFn({ baseUrl, token }, {
-            cdfId: String(Deno.env.get("TEST_CDF")),
+            mtrId: String(Deno.env.get("TEST_MTR")),
             destinationFolder: ".",
         });
         expect(result).not.toThrow();
         expect(infoSpy.calls.length).toStrictEqual(4);
     });
 
-    it("> Basic request > CDF NOT EXISTS", async () => {
-        const consultTestFn = instrumentationSupportForTests(downloadCDFMethod);
+    it("> Basic request > MTR NOT EXISTS", async () => {
+        const consultTestFn = instrumentationSupportForTests(downloadMTRMethod);
 
         const result = consultTestFn({ baseUrl, token }, {
-            cdfId: "12345",
+            mtrId: "12345",
         });
         await expect(result).rejects.toThrow();
+        expect(result).not.toThrow();
         expect(infoSpy.calls.length).toStrictEqual(5);
     });
 
     it("> Invalid token", async () => {
-        const consultTestFn = instrumentationSupportForTests(downloadCDFMethod);
+        const consultTestFn = instrumentationSupportForTests(downloadMTRMethod);
 
         await expect(consultTestFn({ baseUrl, token: "INVALID_TOKEN" }, {
-            cdfId: "020404",
+            mtrId: "020404",
         }))
             .rejects
             .toThrow(/Unauthorized/);
@@ -64,11 +65,11 @@ describe("[DOWNLOAD] - Download CDF", () => {
     });
 
     it("> Invalid URL", async () => {
-        const consultTestFn = instrumentationSupportForTests(downloadCDFMethod);
+        const consultTestFn = instrumentationSupportForTests(downloadMTRMethod);
 
         await expect(
             consultTestFn({ baseUrl: "example.com" as WsBaseURL, token }, {
-                cdfId: "020404",
+                mtrId: "020404",
             }),
         )
             .rejects
