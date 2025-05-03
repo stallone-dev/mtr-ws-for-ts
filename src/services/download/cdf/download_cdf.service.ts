@@ -7,13 +7,13 @@
 
 import type { WsMethodContext } from "~type/method_config.type.ts";
 import type { WsResponseModel } from "~type/ws_config.type.ts";
+import { join } from "@path";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import {
     type DownloadCDFRequestDTO,
     DownloadCDFRequestSchema,
     type DownloadCDFResponseDTO,
-    DownloadCDFResponseJsonSchema,
     DownloadCDFResponseSchema,
 } from "~service/download/cdf/download_cdf.dto.ts";
 
@@ -28,34 +28,41 @@ async function downloadCDFMethod(
 
     parseApiInput(DownloadCDFRequestSchema, params);
 
-    const endpoint = `${ctx.baseUrl}/retornaListaAcondicionamentoPorEstadoFisico/${params.cdfId}`;
+    const endpoint = `${ctx.baseUrl}/downloadCertificado/${params.cdfId}`;
     const response = await fetch(endpoint, {
-        method: "GET",
+        method: "POST",
         headers: {
             "Authorization": ctx.token,
+            "Accept": "application/pdf",
             "Content-Type": "application/json",
         },
     });
 
     if (!response.ok) {
         const _ = await response.text();
-        throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
+        throw new Error(
+            `HTTP ${response.status} @ ${endpoint}: ${response.statusText}`,
+        );
     }
 
-    const cloneResponse = response.clone();
-
-    const response_json = await cloneResponse.json() as WsResponseModel<DownloadCDFResponseDTO>;
-    parseApiResponse(DownloadCDFResponseJsonSchema, response_json, endpoint);
-
     const response_parsed: WsResponseModel<DownloadCDFResponseDTO> = {
-        ...response_json,
+        erro: false,
+        mensagem: "",
+        totalRecords: 1,
         objetoResposta: await response.arrayBuffer(),
     };
 
-    const result = parseApiResponse(DownloadCDFResponseSchema, response_parsed, endpoint);
+    const result = parseApiResponse(
+        DownloadCDFResponseSchema,
+        response_parsed,
+        endpoint,
+    );
 
-    if (params.destinationPath) {
-        await Deno.writeFile(params.destinationPath, new Uint8Array(result));
+    if (params.destinationFolder) {
+        await Deno.writeFile(
+            join(params.destinationFolder, `CDF_${params.cdfId}.pdf`),
+            new Uint8Array(result),
+        );
     }
 
     return result;
