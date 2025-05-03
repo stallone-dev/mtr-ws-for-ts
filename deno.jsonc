@@ -11,7 +11,7 @@
         // Coverage report configs, NEEDS lcov package on system
         "coverage:report": "deno task coverage ; deno coverage ./tests/coverage-log --lcov > ./tests/coverage-log/coverage.lcov ; genhtml -o ./tests/coverage-log ./tests/coverage-log/coverage.lcov",
         "coverage:dev": "deno task coverage ; deno coverage ./tests/coverage-log",
-        "coverage": "deno task test --reporter=dot --coverage=./coverage-log",
+        "coverage": "deno task test --reporter=dot --coverage=./coverage-log"
     },
 
     // ======= Dependency area =======
@@ -34,7 +34,7 @@
         "@logtape": "jsr:@logtape/logtape@^0.9.1",
         "@opentelemetry": "npm:@opentelemetry/api@^1.9.0",
         "@ulid": "jsr:@std/ulid@^1.0.0",
-        "@path": "jsr:@std/path@^1.0.9",
+        "@path": "jsr:@std/path@^1.0.9"
     },
 
     // Unstable features from DenoJS
@@ -52,7 +52,7 @@
 
     "publish": {
         "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".zed", ".env*"],
-        "include": [".env.development"],
+        "include": [".env.development"]
     },
 
     // ======= Source code standardization area =======
@@ -66,7 +66,7 @@
         "semiColons": true,
         "singleQuote": false,
         "proseWrap": "preserve",
-        "newLineKind": "lf",
+        "newLineKind": "lf"
     },
 
     // Linter for
@@ -98,8 +98,8 @@
                 "no-useless-rename",
                 "single-var-declarator",
                 "triple-slash-reference",
-                "verbatim-module-syntax",
-            ],
-        },
-    },
+                "verbatim-module-syntax"
+            ]
+        }
+    }
 }
