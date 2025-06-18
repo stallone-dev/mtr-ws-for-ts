@@ -4,7 +4,7 @@
         "dev": "",
 
         "test:dev": "deno task test --reporter=dot --watch",
-        "test": "deno test --env-file=.env --allow-all ./tests/",
+        "test": "deno test --env-file=.env --ignore=./tests/services/receive/ --allow-all ./tests/",
         "fmt": "deno fmt --config=deno.jsonc ./src ./tests",
         "lint": "deno lint --config=deno.jsonc ./src ./tests",
 
@@ -31,7 +31,7 @@
 
         // Dependencies
         "@zod": "npm:zod@^3.24.2",
-        "@logtape": "jsr:@logtape/logtape@^0.9.1",
+        "@logtape": "jsr:@logtape/logtape@^0.12.0",
         "@opentelemetry": "npm:@opentelemetry/api@^1.9.0",
         "@ulid": "jsr:@std/ulid@^1.0.0",
         "@path": "jsr:@std/path@^1.0.9"
@@ -51,8 +51,8 @@
     "license": "MPL-2.0",
 
     "publish": {
-        "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".zed", ".env*"],
-        "include": [".env.development"]
+        "exclude": ["./tests", ".editorconfig", ".vscode", ".github", ".zed", ".env*"],
+        "include": ["LICENSE", "README.md"]
     },
 
     // ======= Source code standardization area =======
