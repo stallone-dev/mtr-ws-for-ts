@@ -7,9 +7,12 @@
 
 import type { WsClientConfig } from "~type/ws_config.type.ts";
 import { BaseMtrWsClient } from "~class/base.class.ts";
-import { FnWithInstrumentation } from "~util/instrumentation.ts";
 
-import { methodTemplate, type TemplateResponseDTO } from "~service/main.service.ts";
+import { receberLoteMTRMethod } from "~service/receive/receber_mtr/receber_mtr.service.ts";
+import type {
+    ReceberLoteMTRRequestDTO,
+    ReceberLoteMTRResponseDTO,
+} from "~service/receive/receber_mtr/receber_mtr.dto.ts";
 
 export { DestinadorClient };
 
@@ -21,16 +24,11 @@ class DestinadorClient extends BaseMtrWsClient {
         }
     }
 
-    public async methodTemplate(mtrId: string): Promise<TemplateResponseDTO> {
-        return await FnWithInstrumentation(
-            () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
-            {
-                sessionId: this.sessionId,
-                userPersistentId: this.userPersistentId,
-                spanName: "Destinador.methodTemplate",
-                userRole: "DESTINADOR",
-            },
-            { mtrId },
+    public async receberLoteMTR(receiveParams: ReceberLoteMTRRequestDTO): Promise<ReceberLoteMTRResponseDTO> {
+        return await this.instrumentedCall(
+            () => receberLoteMTRMethod(this.BASE_CTX, receiveParams),
+            `${this.role}.receberMtr`,
+            { mtrs: [...receiveParams.map((e) => e.manNumero)] },
         );
     }
 }
