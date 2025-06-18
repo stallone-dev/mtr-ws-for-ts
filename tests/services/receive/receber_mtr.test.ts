@@ -9,7 +9,8 @@ import { WsAuth } from "~service/main.service.ts";
 import { instrumentationSupportForTests } from "../../instrument_support.ts";
 
 import { receberLoteMTRMethod } from "~service/receive/receber_mtr/receber_mtr.service.ts";
-import type { ReceberLoteMTRDTO } from "~service/receive/receber_mtr/receber_mtr.dto.ts";
+import type { ReceberLoteMTRRequestDTO } from "~service/receive/receber_mtr/receber_mtr.dto.ts";
+import { consultarMTRMethod } from "~service/consult/consultar_mtr/consultar_mtr.service.ts";
 
 describe("[RECEIVE] - Receber MTR", () => {
     const infoSpy = spy(logger, "info");
@@ -33,9 +34,12 @@ describe("[RECEIVE] - Receber MTR", () => {
     });
 
     it("> Basic request", async () => {
+        const consultTestFn = instrumentationSupportForTests(consultarMTRMethod);
         const receiveTestFn = instrumentationSupportForTests(receberLoteMTRMethod);
 
-        const receive_object: ReceberLoteMTRDTO = [{
+        const consult_result = await consultTestFn({ baseUrl, token }, "[[[MTR]]]");
+
+        const receive_object: ReceberLoteMTRRequestDTO = [{
             dataRecebimento: Date.now(),
             manNumero: consult_result.manNumero,
             nomeMotorista: "WELLINGTON DA SILVA",
@@ -45,7 +49,7 @@ describe("[RECEIVE] - Receber MTR", () => {
             listaManifestoResiduos: [{
                 claCodigo: consult_result.listaManifestoResiduo[0].classe.claCodigo,
                 marQuantidade: consult_result.listaManifestoResiduo[0].marQuantidade,
-                marQuantidadeRecebida: 6,
+                marQuantidadeRecebida: 10,
                 marJustificativa: "Medição aferida em m³",
                 resCodigoIbama: consult_result.listaManifestoResiduo[0].residuo.resCodigoIbama,
                 tiaCodigo: consult_result.listaManifestoResiduo[0].tipoAcondicionamento.tiaCodigo,
@@ -57,16 +61,13 @@ describe("[RECEIVE] - Receber MTR", () => {
 
         const result = await receiveTestFn({ baseUrl, token }, receive_object);
 
-        console.log(result);
-
         expect(result).toEqual(
             expect.arrayContaining(
                 [expect.objectContaining({
-                    traCodigo: 61,
-                    traDescricao: "Triagem e Transbordo",
+                    restResponseValido: true,
                 })],
             ),
         );
-        expect(infoSpy.calls.length).toStrictEqual(4);
+        expect(infoSpy.calls.length).toStrictEqual(6);
     });
 });
