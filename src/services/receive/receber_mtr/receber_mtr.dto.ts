@@ -7,11 +7,74 @@
 
 import { z } from "@zod";
 
-export { type ReceberLoteMTRDTO, ReceberLoteMTRSchema };
+export {
+    type ReceberLoteMTRRequestDTO,
+    ReceberLoteMTRRequestSchema,
+    type ReceberLoteMTRResponseDTO,
+    ReceberLoteMTRResponseSchema,
+};
 
-type ReceberLoteMTRDTO = z.infer<typeof ReceberLoteMTRSchema>;
+type ReceberLoteMTRRequestDTO = z.infer<typeof ReceberLoteMTRRequestSchema>;
+type ReceberLoteMTRResponseDTO = z.infer<typeof ReceberLoteMTRResponseSchema>;
 
-const ReceberLoteMTRSchema = z.array(
+const ReceberLoteMTRResponseSchema = z.array(
+    z.object({
+        restResponseValido: z.boolean(),
+        restResponseMensagem: z.string(),
+        manNumero: z.string(),
+        dataRecebimento: z.number(),
+        nomeMotorista: z.string(),
+        placaVeiculo: z.string(),
+        nomeResponsavelRecebimento: z.string(),
+        observacoes: z.string(),
+        erroNacional: z.boolean(),
+        mensagemErroNacional: z.string().or(z.null()),
+        recebimentoManifestoCodigoNacional: z.string().or(z.null()),
+        recebimentoManifestoCodigoEstadual: z.string().or(z.null()),
+        listaManifestoResiduos: z.array(
+            z.object({
+                restResponseValido: z.boolean(),
+                restResponseMensagem: z.string(),
+                codigoGerado: z.string().or(z.null()),
+                manCodigo: z.string().or(z.null()),
+                resCodigo: z.string().or(z.null()),
+                resCodigoNovo: z.string().or(z.null()),
+                resCodigoIbama: z.string(),
+                resCodigoIbamaNovo: z.string().or(z.null()),
+                traCodigo: z.number(),
+                traCodigoNovo: z.number().or(z.null()),
+                uniCodigo: z.number(),
+                tieCodigo: z.number(),
+                tiaCodigo: z.number(),
+                claCodigo: z.number(),
+                marQuantidade: z.number(),
+                marQuantidadeRecebida: z.number(),
+                marDensidade: z.number().or(z.null()),
+                marNumeroONU: z.string().or(z.null()),
+                marClasseRisco: z.string().or(z.null()),
+                marNomeEmbarque: z.string().or(z.null()),
+                marGrupoEmbalagem: z.string().or(z.null()),
+                greCodigo: z.number().or(z.null()),
+                marJustificativa: z.string(),
+                marCodigoInterno: z.string().or(z.null()),
+                marDescricaoInterna: z.string().or(z.null()),
+                observacoes: z.string().or(z.null()),
+                marIdentificacaoOrigemPev: z.string().or(z.null()),
+                marCepNumeroPev: z.string().or(z.null()),
+                marLogradouroPev: z.string().or(z.null()),
+                marNumeroPev: z.string().or(z.null()),
+                marBairroPev: z.string().or(z.null()),
+                marComplementoPev: z.string().or(z.null()),
+                cidCodigoIbge: z.number().or(z.null()),
+                cidCodigo: z.string().or(z.null()),
+                uf: z.string().or(z.null()),
+                listaRepresentacao: z.string().or(z.null()),
+            }),
+        ).nonempty(),
+    }),
+).nonempty();
+
+const ReceberLoteMTRRequestSchema = z.array(
     z.object({
         manNumero: z.string(),
         dataRecebimento: z.number(),

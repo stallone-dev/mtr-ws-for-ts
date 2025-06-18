@@ -60,10 +60,25 @@ async function downloadCDFMethod(
 
     if (params.destinationFolder) {
         await Deno.writeFile(
-            join(params.destinationFolder, `CDF_${params.cdfId}.pdf`),
+            join(
+                params.destinationFolder,
+                createCDFFileName(params.cdfId),
+            ),
             new Uint8Array(result),
         );
     }
 
     return result;
+}
+
+function createCDFFileName(cdfId: string): string {
+    const date = new Date();
+    const monthRef = date.getUTCMonth() + 1;
+    const dayRef = date.getUTCDate();
+
+    const year = date.getUTCFullYear();
+    const month = `${monthRef < 10 ? "0" : ""}${monthRef}`;
+    const day = `${dayRef < 10 ? "0" : ""}${dayRef}`;
+
+    return `${year}_${month}_${day}_CDF_${cdfId}.pdf`;
 }
