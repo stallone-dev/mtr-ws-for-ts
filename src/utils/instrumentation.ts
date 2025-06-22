@@ -27,6 +27,7 @@ async function FnWithInstrumentation<T>(
         userPersistentId: string;
         userRole: WsUserRole | "AUTH" | "TEST";
     },
+    childLoggerTag: string,
     debugInputContext?: unknown,
 ): Promise<T> {
     const requestId = ulid();
@@ -37,7 +38,9 @@ async function FnWithInstrumentation<T>(
     span.setAttribute("user.id", id.userPersistentId);
     span.setAttribute("user.role", id.userRole);
 
-    logger.info(`[${id.spanName}] > Init fn`, {
+    const childLogger = logger.getChild(childLoggerTag);
+
+    childLogger.info(`[${id.spanName}] > Init fn - {userRole} - {userPersistentId}`, {
         event: id.spanName,
         phase: "start",
         userPersistentId: id.userPersistentId,
@@ -46,7 +49,7 @@ async function FnWithInstrumentation<T>(
         requestId,
         timestamp: new Date(startTime).toISOString(),
     });
-    logger.debug(`[${id.spanName}] > Input data`, {
+    childLogger.debug(`[${id.spanName}] > Input data - {userRole} - {userPersistentId} - {data}`, {
         event: id.spanName,
         phase: "input",
         userPersistentId: id.userPersistentId,
@@ -60,7 +63,7 @@ async function FnWithInstrumentation<T>(
         const result = await fn();
         const duration = Date.now() - startTime;
 
-        logger.debug(`[${id.spanName}] > Output data`, {
+        childLogger.debug(`[${id.spanName}] > Output data - {userRole} - {userPersistentId} - {data}`, {
             event: id.spanName,
             phase: "output",
             userPersistentId: id.userPersistentId,
@@ -69,7 +72,7 @@ async function FnWithInstrumentation<T>(
             requestId,
             data: result,
         });
-        logger.info(`[${id.spanName}] > Finished fn`, {
+        childLogger.info(`[${id.spanName}] > Finished fn - {userRole} - {userPersistentId} - {durationMs}`, {
             event: id.spanName,
             phase: "success",
             userPersistentId: id.userPersistentId,
@@ -87,7 +90,7 @@ async function FnWithInstrumentation<T>(
         const errorTime = new Date();
         const duration = Date.now() - startTime;
 
-        logger.error(`[${id.spanName}] > Error`, {
+        childLogger.error(`[${id.spanName}] > Error - {userRole} - {userPersistentId} - {durationMs} - {error}`, {
             event: id.spanName,
             phase: "error",
             userPersistentId: id.userPersistentId,
