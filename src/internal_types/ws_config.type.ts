@@ -5,12 +5,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-export { WsBaseURL, type WsClientConfig, type WsResponseModel, type WsUserRole };
+export { type WsBase, WsBaseURL, type WsClientConfig, type WsMethodContext, type WsResponseModel, type WsUserRole };
 
 type WsUserRole = "GERADOR" | "TRANSPORTADOR" | "DESTINADOR";
 
+type WsBase = "SINIR" | "SIGOR";
+
 interface WsClientConfig<R extends WsUserRole = WsUserRole> {
-    baseUrl: WsBaseURL;
+    baseWebServer: WsBase;
     role: R;
     cpf: string;
     senha: string;
@@ -23,6 +25,11 @@ interface WsResponseModel<T> {
     mensagem: string;
     objetoResposta: T;
     totalRecords: number;
+}
+
+interface WsMethodContext {
+    token: string;
+    baseUrl: string;
 }
 
 enum WsBaseURL {
