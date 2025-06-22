@@ -30,6 +30,7 @@ class GeradorClient extends BaseMtrWsClient {
                 userRole: "GERADOR",
                 spanName: "Gerador.methodTemplate",
             },
+            "template",
             { mtrId },
         );
     }

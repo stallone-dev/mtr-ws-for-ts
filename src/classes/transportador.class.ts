@@ -30,6 +30,7 @@ class TransportadorClient extends BaseMtrWsClient {
                 userRole: "TRANSPORTADOR",
                 spanName: "Transportador.methodTemplate",
             },
+            "template",
             { mtrId },
         );
     }
