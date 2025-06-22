@@ -5,27 +5,26 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type ReceberLoteMTRRequestDTO,
-    ReceberLoteMTRRequestSchema,
-    type ReceberLoteMTRResponseDTO,
-    ReceberLoteMTRResponseSchema,
+    type ReceberLoteMtrRequest,
+    ReceberLoteMtrRequestSchema,
+    type ReceberLoteMtrResponse,
+    ReceberLoteMtrResponseSchema,
 } from "~service/receive/receber_mtr/receber_mtr.dto.ts";
 
 export { receberLoteMTRMethod };
 
 async function receberLoteMTRMethod(
     ctx: WsMethodContext,
-    params: ReceberLoteMTRRequestDTO,
-): Promise<ReceberLoteMTRResponseDTO> {
+    params: ReceberLoteMtrRequest,
+): Promise<ReceberLoteMtrResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
-    const input = parseApiInput(ReceberLoteMTRRequestSchema, params);
+    const input = parseApiInput(ReceberLoteMtrRequestSchema, params);
 
     const endpoint = `${ctx.baseUrl}/receberManifestoLote`;
     const response = await fetch(endpoint, {
@@ -42,8 +41,8 @@ async function receberLoteMTRMethod(
         throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
     }
 
-    const response_data = await response.json() as WsResponseModel<ReceberLoteMTRResponseDTO>;
-    const result = parseApiResponse(ReceberLoteMTRResponseSchema, response_data, endpoint);
+    const response_data = await response.json() as WsResponseModel<ReceberLoteMtrResponse>;
+    const result = parseApiResponse(ReceberLoteMtrResponseSchema, response_data, endpoint);
 
     return result;
 }

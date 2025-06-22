@@ -5,20 +5,19 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type ListarUnidadesMedidaDTO,
-    ListarUnidadesMedidaSchema,
+    type ListarUnidadesMedidaResponse,
+    ListarUnidadesMedidaResponseSchema,
 } from "~service/consult/listar_unidades_medida/listar_unidades_medida.dto.ts";
 
 export { listarUnidadesMedidaMethod };
 
 async function listarUnidadesMedidaMethod(
     ctx: WsMethodContext,
-): Promise<ListarUnidadesMedidaDTO> {
+): Promise<ListarUnidadesMedidaResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
@@ -36,8 +35,8 @@ async function listarUnidadesMedidaMethod(
         throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
     }
 
-    const response_data = await response.json() as WsResponseModel<ListarUnidadesMedidaDTO>;
-    const result = parseApiResponse(ListarUnidadesMedidaSchema, response_data, endpoint);
+    const response_data = await response.json() as WsResponseModel<ListarUnidadesMedidaResponse>;
+    const result = parseApiResponse(ListarUnidadesMedidaResponseSchema, response_data, endpoint);
 
     return result;
 }

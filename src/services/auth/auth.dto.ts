@@ -7,10 +7,10 @@
 
 import { z } from "@zod";
 
-export { type AuthRequestDTO, AuthRequestSchema, type AuthResponseDTO, AuthResponseSchema };
+export { type AuthRequest, AuthRequestSchema, type AuthResponse, AuthResponseSchema };
 
-type AuthResponseDTO = z.infer<typeof AuthResponseSchema>;
-type AuthRequestDTO = z.infer<typeof AuthRequestSchema>;
+type AuthResponse = z.infer<typeof AuthResponseSchema>;
+type AuthRequest = z.infer<typeof AuthRequestSchema>;
 
 const AuthResponseSchema = z.string().startsWith("Bearer ");
 

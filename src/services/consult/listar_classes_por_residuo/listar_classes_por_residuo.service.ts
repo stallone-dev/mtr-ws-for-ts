@@ -5,14 +5,13 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type ListarClassesPorResiduoRequestDTO,
+    type ListarClassesPorResiduoRequest,
     ListarClassesPorResiduoRequestSchema,
-    type ListarClassesPorResiduoResponseDTO,
+    type ListarClassesPorResiduoResponse,
     ListarClassesPorResiduoResponseSchema,
 } from "~service/consult/listar_classes_por_residuo/listar_classes_por_residuo.dto.ts";
 
@@ -20,8 +19,8 @@ export { listarClassesPorResiduoMethod };
 
 async function listarClassesPorResiduoMethod(
     ctx: WsMethodContext,
-    residuoId: ListarClassesPorResiduoRequestDTO,
-): Promise<ListarClassesPorResiduoResponseDTO> {
+    residuoId: ListarClassesPorResiduoRequest,
+): Promise<ListarClassesPorResiduoResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
@@ -42,7 +41,7 @@ async function listarClassesPorResiduoMethod(
         throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
     }
 
-    const response_data = await response.json() as WsResponseModel<ListarClassesPorResiduoResponseDTO>;
+    const response_data = await response.json() as WsResponseModel<ListarClassesPorResiduoResponse>;
     const result = parseApiResponse(ListarClassesPorResiduoResponseSchema, response_data, endpoint);
 
     return result;

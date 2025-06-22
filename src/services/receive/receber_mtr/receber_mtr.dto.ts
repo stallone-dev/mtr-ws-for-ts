@@ -8,16 +8,16 @@
 import { z } from "@zod";
 
 export {
-    type ReceberLoteMTRRequestDTO,
-    ReceberLoteMTRRequestSchema,
-    type ReceberLoteMTRResponseDTO,
-    ReceberLoteMTRResponseSchema,
+    type ReceberLoteMtrRequest,
+    ReceberLoteMtrRequestSchema,
+    type ReceberLoteMtrResponse,
+    ReceberLoteMtrResponseSchema,
 };
 
-type ReceberLoteMTRRequestDTO = z.infer<typeof ReceberLoteMTRRequestSchema>;
-type ReceberLoteMTRResponseDTO = z.infer<typeof ReceberLoteMTRResponseSchema>;
+type ReceberLoteMtrRequest = z.infer<typeof ReceberLoteMtrRequestSchema>;
+type ReceberLoteMtrResponse = z.infer<typeof ReceberLoteMtrResponseSchema>;
 
-const ReceberLoteMTRResponseSchema = z.array(
+const ReceberLoteMtrResponseSchema = z.array(
     z.object({
         restResponseValido: z.boolean(),
         restResponseMensagem: z.string(),
@@ -38,7 +38,6 @@ const ReceberLoteMTRResponseSchema = z.array(
                 codigoGerado: z.string().or(z.null()),
                 manCodigo: z.string().or(z.null()),
                 resCodigo: z.string().or(z.null()),
-                resCodigoNovo: z.string().or(z.null()),
                 resCodigoIbama: z.string(),
                 resCodigoIbamaNovo: z.string().or(z.null()),
                 traCodigo: z.number(),
@@ -74,7 +73,7 @@ const ReceberLoteMTRResponseSchema = z.array(
     }),
 ).nonempty();
 
-const ReceberLoteMTRRequestSchema = z.array(
+const ReceberLoteMtrRequestSchema = z.array(
     z.object({
         manNumero: z.string(),
         dataRecebimento: z.number(),

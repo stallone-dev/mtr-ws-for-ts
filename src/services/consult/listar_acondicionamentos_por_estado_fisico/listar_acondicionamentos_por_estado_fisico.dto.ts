@@ -8,16 +8,16 @@
 import { z } from "@zod";
 
 export {
-    type ListarAcondicionamentosPorEstadoFisicoRequestDTO,
+    type ListarAcondicionamentosPorEstadoFisicoRequest,
     ListarAcondicionamentosPorEstadoFisicoRequestSchema,
-    type ListarAcondicionamentosPorEstadoFisicoResponseDTO,
+    type ListarAcondicionamentosPorEstadoFisicoResponse,
     ListarAcondicionamentosPorEstadoFisicoResponseSchema,
 };
 
-type ListarAcondicionamentosPorEstadoFisicoResponseDTO = z.infer<
+type ListarAcondicionamentosPorEstadoFisicoResponse = z.infer<
     typeof ListarAcondicionamentosPorEstadoFisicoResponseSchema
 >;
-type ListarAcondicionamentosPorEstadoFisicoRequestDTO = z.infer<
+type ListarAcondicionamentosPorEstadoFisicoRequest = z.infer<
     typeof ListarAcondicionamentosPorEstadoFisicoRequestSchema
 >;
 

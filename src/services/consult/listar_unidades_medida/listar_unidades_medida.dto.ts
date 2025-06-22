@@ -7,11 +7,11 @@
 
 import { z } from "@zod";
 
-export { type ListarUnidadesMedidaDTO, ListarUnidadesMedidaSchema };
+export { type ListarUnidadesMedidaResponse, ListarUnidadesMedidaResponseSchema };
 
-type ListarUnidadesMedidaDTO = z.infer<typeof ListarUnidadesMedidaSchema>;
+type ListarUnidadesMedidaResponse = z.infer<typeof ListarUnidadesMedidaResponseSchema>;
 
-const ListarUnidadesMedidaSchema = z.array(
+const ListarUnidadesMedidaResponseSchema = z.array(
     z.object({
         uniCodigo: z.number().min(1),
         uniDescricao: z.string(),

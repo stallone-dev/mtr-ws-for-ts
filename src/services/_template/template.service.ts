@@ -5,8 +5,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import {

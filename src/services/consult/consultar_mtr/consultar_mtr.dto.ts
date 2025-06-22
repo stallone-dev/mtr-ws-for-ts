@@ -7,17 +7,12 @@
 
 import { z } from "@zod";
 
-export {
-    type ConsultarMTRRequestDTO,
-    ConsultarMTRRequestSchema,
-    type ConsultarMTRResponseDTO,
-    ConsultarMTRResponseSchema,
-};
+export { type ConsultarMtrRequest, ConsultarMtrRequestSchema, type ConsultarMtrResponse, ConsultarMtrResponseSchema };
 
-type ConsultarMTRResponseDTO = z.infer<typeof ConsultarMTRResponseSchema>;
-type ConsultarMTRRequestDTO = z.infer<typeof ConsultarMTRRequestSchema>;
+type ConsultarMtrResponse = z.infer<typeof ConsultarMtrResponseSchema>;
+type ConsultarMtrRequest = z.infer<typeof ConsultarMtrRequestSchema>;
 
-const ConsultarMTRResponseSchema = z.object({
+const ConsultarMtrResponseSchema = z.object({
     manNumero: z.string(),
     manResponsavel: z.string(),
     manDataExpedicao: z.number().or(z.null()),
@@ -103,4 +98,4 @@ const ConsultarMTRResponseSchema = z.object({
     ).nonempty(),
 });
 
-const ConsultarMTRRequestSchema = z.string().min(12);
+const ConsultarMtrRequestSchema = z.string().min(12);

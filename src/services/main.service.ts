@@ -4,12 +4,12 @@ import { FnWithInstrumentation } from "~util/instrumentation.ts";
 import type { TemplateResponseDTO } from "./_template/template.dto.ts";
 import { methodTemplate } from "./_template/template.service.ts";
 import { authMethod } from "~service/auth/auth.service.ts";
-import type { AuthRequestDTO } from "~service/auth/auth.dto.ts";
+import type { AuthRequest } from "~service/auth/auth.dto.ts";
 import type { WsBaseURL } from "~type/ws_config.type.ts";
 
 export { methodTemplate, type TemplateResponseDTO, WsAuth };
 
-const WsAuth = async (baseUrl: WsBaseURL, login: AuthRequestDTO, userPersistentId?: string) =>
+const WsAuth = async (baseUrl: WsBaseURL, login: AuthRequest, userPersistentId?: string) =>
     await FnWithInstrumentation(
         () => authMethod({ token: "future", baseUrl }, login),
         {
@@ -18,5 +18,6 @@ const WsAuth = async (baseUrl: WsBaseURL, login: AuthRequestDTO, userPersistentI
             userRole: "AUTH",
             spanName: "AuthMethod",
         },
+        "auth",
         { unidade: login.unidade },
     );

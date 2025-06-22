@@ -5,18 +5,17 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
-import { type AuthRequestDTO, AuthRequestSchema, type AuthResponseDTO, AuthResponseSchema } from "./auth.dto.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import { type AuthRequest, AuthRequestSchema, type AuthResponse, AuthResponseSchema } from "./auth.dto.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 
 export { authMethod };
 
 async function authMethod(
     ctx: WsMethodContext,
-    { cpfCnpj, senha, unidade }: AuthRequestDTO,
-): Promise<AuthResponseDTO> {
+    { cpfCnpj, senha, unidade }: AuthRequest,
+): Promise<AuthResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
@@ -37,7 +36,7 @@ async function authMethod(
         throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
     }
 
-    const response_data = await response.json() as WsResponseModel<AuthResponseDTO>;
+    const response_data = await response.json() as WsResponseModel<AuthResponse>;
     const result = parseApiResponse(AuthResponseSchema, response_data, endpoint);
 
     return result;

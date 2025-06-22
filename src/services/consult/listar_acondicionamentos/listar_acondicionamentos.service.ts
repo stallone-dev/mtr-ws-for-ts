@@ -5,12 +5,11 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type ListarAcondicionamentosResponseDTO,
+    type ListarAcondicionamentosResponse,
     ListarAcondicionamentosResponseSchema,
 } from "~service/consult/listar_acondicionamentos/listar_acondicionamentos.dto.ts";
 
@@ -18,7 +17,7 @@ export { listarAcondicionamentosMethod };
 
 async function listarAcondicionamentosMethod(
     ctx: WsMethodContext,
-): Promise<ListarAcondicionamentosResponseDTO> {
+): Promise<ListarAcondicionamentosResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
@@ -36,7 +35,7 @@ async function listarAcondicionamentosMethod(
         throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
     }
 
-    const response_data = (await response.json()) as WsResponseModel<ListarAcondicionamentosResponseDTO>;
+    const response_data = (await response.json()) as WsResponseModel<ListarAcondicionamentosResponse>;
     const result = parseApiResponse(ListarAcondicionamentosResponseSchema, response_data, endpoint);
 
     return result;

@@ -7,11 +7,11 @@
 
 import { z } from "@zod";
 
-export { type ListarEstadosFisicosDTO, ListarEstadosFisicosSchema };
+export { type ListarEstadosFisicosResponse, ListarEstadosFisicosResponseSchema };
 
-type ListarEstadosFisicosDTO = z.infer<typeof ListarEstadosFisicosSchema>;
+type ListarEstadosFisicosResponse = z.infer<typeof ListarEstadosFisicosResponseSchema>;
 
-const ListarEstadosFisicosSchema = z.array(
+const ListarEstadosFisicosResponseSchema = z.array(
     z.object({
         tieCodigo: z.number().min(1),
         tieDescricao: z.string(),

@@ -7,22 +7,22 @@
 
 import { z } from "@zod";
 
-export { type DownloadCDFRequestDTO, DownloadCDFRequestSchema, type DownloadCDFResponseDTO, DownloadCDFResponseSchema };
+export { type DownloadCdfRequest, DownloadCdfRequestSchema, type DownloadCdfResponse, DownloadCdfResponseSchema };
 
-type DownloadCDFResponseDTO = z.infer<
-    typeof DownloadCDFResponseSchema
+type DownloadCdfResponse = z.infer<
+    typeof DownloadCdfResponseSchema
 >;
-type DownloadCDFRequestDTO = z.infer<
-    typeof DownloadCDFRequestSchema
+type DownloadCdfRequest = z.infer<
+    typeof DownloadCdfRequestSchema
 >;
 
-const DownloadCDFResponseSchema = z.instanceof(ArrayBuffer, {
+const DownloadCdfResponseSchema = z.instanceof(ArrayBuffer, {
     message: "Somente ArrayBuffer",
 }).refine((e) => e.byteLength > 0, {
     message: "Nenhum byte recebido",
 });
 
-const DownloadCDFRequestSchema = z.object({
+const DownloadCdfRequestSchema = z.object({
     cdfId: z.string().min(5),
     destinationFolder: z.string().min(1).nonempty().optional(),
 });

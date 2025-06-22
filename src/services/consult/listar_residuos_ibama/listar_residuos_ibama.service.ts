@@ -5,20 +5,19 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type ListarResiduosDTO,
-    ListarResiduosSchema,
+    type ListarResiduosResponse,
+    ListarResiduosResponseSchema,
 } from "~service/consult/listar_residuos_ibama/listar_residuos_ibama.dto.ts";
 
 export { listarResiduosMethod };
 
 async function listarResiduosMethod(
     ctx: WsMethodContext,
-): Promise<ListarResiduosDTO> {
+): Promise<ListarResiduosResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
@@ -36,8 +35,8 @@ async function listarResiduosMethod(
         throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
     }
 
-    const response_data = await response.json() as WsResponseModel<ListarResiduosDTO>;
-    const result = parseApiResponse(ListarResiduosSchema, response_data, endpoint);
+    const response_data = await response.json() as WsResponseModel<ListarResiduosResponse>;
+    const result = parseApiResponse(ListarResiduosResponseSchema, response_data, endpoint);
 
     return result;
 }

@@ -5,28 +5,27 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { join } from "@path";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type DownloadCDFRequestDTO,
-    DownloadCDFRequestSchema,
-    type DownloadCDFResponseDTO,
-    DownloadCDFResponseSchema,
+    type DownloadCdfRequest,
+    DownloadCdfRequestSchema,
+    type DownloadCdfResponse,
+    DownloadCdfResponseSchema,
 } from "~service/download/cdf/download_cdf.dto.ts";
 
 export { downloadCDFMethod };
 
 async function downloadCDFMethod(
     ctx: WsMethodContext,
-    params: DownloadCDFRequestDTO,
-): Promise<DownloadCDFResponseDTO> {
+    params: DownloadCdfRequest,
+): Promise<DownloadCdfResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
-    parseApiInput(DownloadCDFRequestSchema, params);
+    parseApiInput(DownloadCdfRequestSchema, params);
 
     const endpoint = `${ctx.baseUrl}/downloadCertificado/${params.cdfId}`;
     const response = await fetch(endpoint, {
@@ -45,7 +44,7 @@ async function downloadCDFMethod(
         );
     }
 
-    const response_parsed: WsResponseModel<DownloadCDFResponseDTO> = {
+    const response_parsed: WsResponseModel<DownloadCdfResponse> = {
         erro: false,
         mensagem: "",
         totalRecords: 1,
@@ -53,7 +52,7 @@ async function downloadCDFMethod(
     };
 
     const result = parseApiResponse(
-        DownloadCDFResponseSchema,
+        DownloadCdfResponseSchema,
         response_parsed,
         endpoint,
     );

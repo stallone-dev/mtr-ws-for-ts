@@ -5,28 +5,27 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { join } from "@path";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type DownloadMTRRequestDTO,
-    DownloadMTRRequestSchema,
-    type DownloadMTRResponseDTO,
-    DownloadMTRResponseSchema,
+    type DownloadMtrRequest,
+    DownloadMtrRequestSchema,
+    type DownloadMtrResponse,
+    DownloadMtrResponseSchema,
 } from "~service/download/mtr/download_mtr.dto.ts";
 
 export { downloadMTRMethod };
 
 async function downloadMTRMethod(
     ctx: WsMethodContext,
-    params: DownloadMTRRequestDTO,
-): Promise<DownloadMTRResponseDTO> {
+    params: DownloadMtrRequest,
+): Promise<DownloadMtrResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
-    parseApiInput(DownloadMTRRequestSchema, params);
+    parseApiInput(DownloadMtrRequestSchema, params);
 
     const endpoint = `${ctx.baseUrl}/downloadManifesto/${params.mtrId}`;
     const response = await fetch(endpoint, {
@@ -45,7 +44,7 @@ async function downloadMTRMethod(
         );
     }
 
-    const response_parsed: WsResponseModel<DownloadMTRResponseDTO> = {
+    const response_parsed: WsResponseModel<DownloadMtrResponse> = {
         erro: false,
         mensagem: "",
         totalRecords: 1,
@@ -53,7 +52,7 @@ async function downloadMTRMethod(
     };
 
     const result = parseApiResponse(
-        DownloadMTRResponseSchema,
+        DownloadMtrResponseSchema,
         response_parsed,
         endpoint,
     );

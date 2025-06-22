@@ -7,22 +7,22 @@
 
 import { z } from "@zod";
 
-export { type DownloadMTRRequestDTO, DownloadMTRRequestSchema, type DownloadMTRResponseDTO, DownloadMTRResponseSchema };
+export { type DownloadMtrRequest, DownloadMtrRequestSchema, type DownloadMtrResponse, DownloadMtrResponseSchema };
 
-type DownloadMTRResponseDTO = z.infer<
-    typeof DownloadMTRResponseSchema
+type DownloadMtrResponse = z.infer<
+    typeof DownloadMtrResponseSchema
 >;
-type DownloadMTRRequestDTO = z.infer<
-    typeof DownloadMTRRequestSchema
+type DownloadMtrRequest = z.infer<
+    typeof DownloadMtrRequestSchema
 >;
 
-const DownloadMTRResponseSchema = z.instanceof(ArrayBuffer, {
+const DownloadMtrResponseSchema = z.instanceof(ArrayBuffer, {
     message: "Somente ArrayBuffer",
 }).refine((e) => e.byteLength > 0, {
     message: "Nenhum byte recebido",
 });
 
-const DownloadMTRRequestSchema = z.object({
+const DownloadMtrRequestSchema = z.object({
     mtrId: z.string().min(5),
     destinationFolder: z.string().min(1).nonempty().optional(),
 });

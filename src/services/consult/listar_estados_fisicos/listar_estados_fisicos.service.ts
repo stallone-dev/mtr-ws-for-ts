@@ -5,20 +5,19 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type ListarEstadosFisicosDTO,
-    ListarEstadosFisicosSchema,
+    type ListarEstadosFisicosResponse,
+    ListarEstadosFisicosResponseSchema,
 } from "~service/consult/listar_estados_fisicos/listar_estados_fisicos.dto.ts";
 
 export { listarEstadosFisicosMethod };
 
 async function listarEstadosFisicosMethod(
     ctx: WsMethodContext,
-): Promise<ListarEstadosFisicosDTO> {
+): Promise<ListarEstadosFisicosResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
@@ -36,8 +35,8 @@ async function listarEstadosFisicosMethod(
         throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
     }
 
-    const response_data = await response.json() as WsResponseModel<ListarEstadosFisicosDTO>;
-    const result = parseApiResponse(ListarEstadosFisicosSchema, response_data, endpoint);
+    const response_data = await response.json() as WsResponseModel<ListarEstadosFisicosResponse>;
+    const result = parseApiResponse(ListarEstadosFisicosResponseSchema, response_data, endpoint);
 
     return result;
 }

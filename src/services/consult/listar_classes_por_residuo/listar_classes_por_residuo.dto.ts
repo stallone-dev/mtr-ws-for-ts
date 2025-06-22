@@ -8,14 +8,14 @@
 import { z } from "@zod";
 
 export {
-    type ListarClassesPorResiduoRequestDTO,
+    type ListarClassesPorResiduoRequest,
     ListarClassesPorResiduoRequestSchema,
-    type ListarClassesPorResiduoResponseDTO,
+    type ListarClassesPorResiduoResponse,
     ListarClassesPorResiduoResponseSchema,
 };
 
-type ListarClassesPorResiduoResponseDTO = z.infer<typeof ListarClassesPorResiduoResponseSchema>;
-type ListarClassesPorResiduoRequestDTO = z.infer<typeof ListarClassesPorResiduoRequestSchema>;
+type ListarClassesPorResiduoResponse = z.infer<typeof ListarClassesPorResiduoResponseSchema>;
+type ListarClassesPorResiduoRequest = z.infer<typeof ListarClassesPorResiduoRequestSchema>;
 
 const ListarClassesPorResiduoResponseSchema = z.array(
     z.object({

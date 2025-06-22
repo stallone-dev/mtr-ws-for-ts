@@ -7,9 +7,9 @@
 
 import { z } from "@zod";
 
-export { type ListarAcondicionamentosResponseDTO, ListarAcondicionamentosResponseSchema };
+export { type ListarAcondicionamentosResponse, ListarAcondicionamentosResponseSchema };
 
-type ListarAcondicionamentosResponseDTO = z.infer<typeof ListarAcondicionamentosResponseSchema>;
+type ListarAcondicionamentosResponse = z.infer<typeof ListarAcondicionamentosResponseSchema>;
 
 const ListarAcondicionamentosResponseSchema = z.array(
     z.object({

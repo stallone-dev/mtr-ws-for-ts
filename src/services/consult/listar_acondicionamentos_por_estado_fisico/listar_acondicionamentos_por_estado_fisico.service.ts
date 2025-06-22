@@ -5,14 +5,13 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import type { WsMethodContext } from "~type/method_config.type.ts";
-import type { WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import {
-    type ListarAcondicionamentosPorEstadoFisicoRequestDTO,
+    type ListarAcondicionamentosPorEstadoFisicoRequest,
     ListarAcondicionamentosPorEstadoFisicoRequestSchema,
-    type ListarAcondicionamentosPorEstadoFisicoResponseDTO,
+    type ListarAcondicionamentosPorEstadoFisicoResponse,
     ListarAcondicionamentosPorEstadoFisicoResponseSchema,
 } from "~service/consult/listar_acondicionamentos_por_estado_fisico/listar_acondicionamentos_por_estado_fisico.dto.ts";
 
@@ -20,8 +19,8 @@ export { listarAcondicionamentosPorEstadoFisicoMethod };
 
 async function listarAcondicionamentosPorEstadoFisicoMethod(
     ctx: WsMethodContext,
-    estadoId: ListarAcondicionamentosPorEstadoFisicoRequestDTO,
-): Promise<ListarAcondicionamentosPorEstadoFisicoResponseDTO> {
+    estadoId: ListarAcondicionamentosPorEstadoFisicoRequest,
+): Promise<ListarAcondicionamentosPorEstadoFisicoResponse> {
     if (!ctx.baseUrl) throw new Error("Base URL ausente");
     if (!ctx.token) throw new Error("Token ausente");
 
@@ -41,7 +40,7 @@ async function listarAcondicionamentosPorEstadoFisicoMethod(
         throw new Error(`HTTP ${response.status} @ ${endpoint}: ${response.statusText}`);
     }
 
-    const response_data = await response.json() as WsResponseModel<ListarAcondicionamentosPorEstadoFisicoResponseDTO>;
+    const response_data = await response.json() as WsResponseModel<ListarAcondicionamentosPorEstadoFisicoResponse>;
 
     const result = parseApiResponse(ListarAcondicionamentosPorEstadoFisicoResponseSchema, response_data, endpoint);
 
