@@ -12,6 +12,7 @@
     "jsr:@std/testing@*": "1.0.11",
     "jsr:@std/ulid@1": "1.0.0",
     "npm:@opentelemetry/api@^1.9.0": "1.9.0",
+    "npm:create-hono@latest": "0.19.1",
     "npm:zod@^3.24.2": "3.24.3"
   },
   "jsr": {
@@ -81,6 +82,10 @@
   "npm": {
     "@opentelemetry/api@1.9.0": {
       "integrity": "sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg=="
+    },
+    "create-hono@0.19.1": {
+      "integrity": "sha512-Nou3VaRiSA0EhjESlhHmT+FD0vnwDGK6O2Az6vLUzU4k51Kd04ZUNjfMvceuR0QgbZe3Wl4g/s4mNZU1mCIT5A==",
+      "bin": true
     },
     "zod@3.24.3": {
       "integrity": "sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg=="

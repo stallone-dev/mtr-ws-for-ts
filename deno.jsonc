@@ -1,11 +1,8 @@
 {
     "tasks": {
-        "start": "",
-        "dev": "",
-
         "test:dev": "deno task test --reporter=dot --watch",
         "test": "deno test --env-file=.env --ignore=./tests/services/receive/ --allow-all ./tests/",
-        "fmt": "deno fmt --config=deno.jsonc ./src ./tests",
+        "fmt": "deno fmt --config=deno.jsonc ./src ./tests ./deno.jsonc",
         "lint": "deno lint --config=deno.jsonc ./src ./tests",
 
         // Coverage report configs, NEEDS lcov package on system
@@ -20,7 +17,7 @@
         "~logger": "./src/configs/logger.ts",
         "~telemetry": "./src/configs/telemetry.ts",
         "~service/": "./src/services/",
-        "~type/": "./src/types/",
+        "~type/": "./src/internal_types/",
         "~class/": "./src/classes/",
         "~util/": "./src/utils/",
 
