@@ -1,9 +1,9 @@
-import { spy } from "@testing/mock";
+import { spy, stub } from "@testing/mock";
 import { after, before, describe, it } from "@testing/bdd";
 import { expect } from "@expect";
 import { logger } from "~logger";
 
-import type { AuthRequestDTO } from "~service/auth/auth.dto.ts";
+import type { AuthRequest } from "~service/auth/auth.dto.ts";
 import { WsBaseURL } from "~type/ws_config.type.ts";
 import { WsAuth } from "~service/main.service.ts";
 import { instrumentationSupportForTests } from "../../instrument_support.ts";
@@ -11,6 +11,7 @@ import { instrumentationSupportForTests } from "../../instrument_support.ts";
 import { listarEstadosFisicosMethod } from "~service/consult/listar_estados_fisicos/listar_estados_fisicos.service.ts";
 
 describe("[CONSULT] - Estados fisicos", () => {
+    const childStub = stub(logger, "getChild", () => logger);
     const infoSpy = spy(logger, "info");
     const baseUrl = WsBaseURL.SINIR;
     let token: string;
@@ -21,13 +22,14 @@ describe("[CONSULT] - Estados fisicos", () => {
             cpfCnpj: env.SINIR_CPF_ADMIN,
             senha: env.SINIR_PASSWORD,
             unidade: env.SINIR_UNIDADE,
-        } as AuthRequestDTO;
+        } as AuthRequest;
 
         token = await WsAuth(baseUrl, login, "TEST");
     });
 
     after(() => {
         // console.log(infoSpy.calls);
+        childStub.restore();
         infoSpy.restore();
     });
 

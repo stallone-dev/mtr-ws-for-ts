@@ -1,15 +1,16 @@
-import { spy } from "@testing/mock";
+import { spy, stub } from "@testing/mock";
 import { after, before, describe, it } from "@testing/bdd";
 import { expect } from "@expect";
 import { logger } from "~logger";
 
-import type { AuthRequestDTO } from "~service/auth/auth.dto.ts";
+import type { AuthRequest } from "~service/auth/auth.dto.ts";
 import { WsBaseURL } from "~type/ws_config.type.ts";
 import { WsAuth } from "~service/main.service.ts";
 import { instrumentationSupportForTests } from "../../instrument_support.ts";
 import { consultarMTRMethod } from "~service/consult/consultar_mtr/consultar_mtr.service.ts";
 
 describe("[CONSULT] - Consultar MTR típica", () => {
+    const childStub = stub(logger, "getChild", () => logger);
     const infoSpy = spy(logger, "info");
     const baseUrl = WsBaseURL.SINIR;
     let token: string;
@@ -20,13 +21,14 @@ describe("[CONSULT] - Consultar MTR típica", () => {
             cpfCnpj: env.SINIR_CPF_ADMIN,
             senha: env.SINIR_PASSWORD,
             unidade: env.SINIR_UNIDADE,
-        } as AuthRequestDTO;
+        } as AuthRequest;
 
         token = await WsAuth(baseUrl, login, "TEST");
     });
 
     after(() => {
         // console.log(infoSpy.calls);
+        childStub.restore();
         infoSpy.restore();
     });
 

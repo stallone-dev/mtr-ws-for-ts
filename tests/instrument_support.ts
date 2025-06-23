@@ -15,5 +15,6 @@ function instrumentationSupportForTests<FN extends (...args: any[]) => any>(
                 userRole: "TEST",
                 spanName: "TEST",
             },
+            "TESTE-CHILD-LOGGER",
         );
 }

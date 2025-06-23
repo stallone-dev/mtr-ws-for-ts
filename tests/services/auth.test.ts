@@ -1,19 +1,20 @@
-import { spy } from "@testing/mock";
+import { spy, stub } from "@testing/mock";
 import { after, before, describe, it } from "@testing/bdd";
 import { expect } from "@expect";
 import { logger } from "~logger";
 
-import type { AuthRequestDTO } from "~service/auth/auth.dto.ts";
+import type { AuthRequest } from "~service/auth/auth.dto.ts";
 import { WsBaseURL } from "~type/ws_config.type.ts";
 import { WsAuth } from "~service/main.service.ts";
 
 describe("[AUTH]", () => {
+    const childStub = stub(logger, "getChild", () => logger);
     const infoSpy = spy(logger, "info");
     let loginMock = {
         cpfCnpj: "",
         senha: "",
         unidade: "",
-    } as AuthRequestDTO;
+    } as AuthRequest;
 
     before(() => {
         const env = Deno.env.toObject();
@@ -23,7 +24,8 @@ describe("[AUTH]", () => {
     });
 
     after(() => {
-        loginMock = {} as AuthRequestDTO;
+        loginMock = {} as AuthRequest;
+        childStub.restore();
         infoSpy.restore();
     });
 

@@ -2,7 +2,6 @@ import { describe, it } from "@testing/bdd";
 import { expect } from "@expect";
 
 import type { WsClientConfig, WsUserRole } from "~type/ws_config.type.ts";
-import { WsBaseURL } from "~type/ws_config.type.ts";
 
 import { DestinadorClient } from "~class/destinador.class.ts";
 import { TransportadorClient } from "~class/transportador.class.ts";
@@ -13,10 +12,11 @@ describe("[CLIENT INSTANCE]", () => {
     const env = Deno.env.toObject();
 
     const configMock = {
-        baseUrl: WsBaseURL.SINIR,
+        baseWebServer: "SINIR",
         cpf: env.SINIR_CPF_ADMIN,
         unidade: env.SINIR_UNIDADE,
         senha: env.SINIR_PASSWORD,
+        persistentId: "teste",
     } as const;
 
     it("> Instance of GeradorClient", async () => {
