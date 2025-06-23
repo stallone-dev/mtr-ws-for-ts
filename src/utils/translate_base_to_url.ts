@@ -15,5 +15,5 @@ function WsBaseToBaseURL(base: WsBase): WsBaseURL {
 
 const BaseToUrlSchema: Record<WsBase, WsBaseURL> = {
     SIGOR: WsBaseURL.SIGOR,
-    SINIR: WsBaseURL.SIGOR,
+    SINIR: WsBaseURL.SINIR,
 };

@@ -8,6 +8,7 @@
 import { ulid } from "@ulid";
 import { WsAuth } from "~service/main.service.ts";
 import { FnWithInstrumentation } from "~util/instrumentation.ts";
+import { WsBaseToBaseURL } from "~util/translate_base_to_url.ts";
 import type { WsBaseURL, WsClientConfig, WsMethodContext, WsUserRole } from "~type/ws_config.type.ts";
 
 import type { ConsultarMtrRequest, ConsultarMtrResponse } from "~service/consult/consultar_mtr/consultar_mtr.dto.ts";
@@ -39,10 +40,10 @@ import { listarTratamentosMethod } from "~service/consult/listar_tratamentos/lis
 import { listarUnidadesMedidaMethod } from "~service/consult/listar_unidades_medida/listar_unidades_medida.service.ts";
 import { downloadMTRMethod } from "~service/download/mtr/download_mtr.service.ts";
 import { downloadCDFMethod } from "~service/download/cdf/download_cdf.service.ts";
-import { WsBaseToBaseURL } from "~util/translate_base_to_url.ts";
 
 export { BaseMtrWsClient };
 
+/** */
 abstract class BaseMtrWsClient {
     protected readonly token: string;
     protected readonly baseUrl: WsBaseURL;
