@@ -7,7 +7,7 @@
  */
 
 import type * as MtrWsType from "./src/types.mtrws.ts";
-import { createMtrWsClient } from "./src/client.mtrws.ts";
+import { createMtrWsClient as MtrWsClient } from "./src/client.mtrws.ts";
 
 export {
     /**
@@ -41,7 +41,7 @@ export {
      *
      * @module
      */
-    createMtrWsClient as MtrWsClient,
+    MtrWsClient,
     /**
      * Interfaces utilizadas na estruturação do WebService MTR do SINIR/SIGOR
      *
