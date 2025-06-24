@@ -11,7 +11,7 @@ export { methodTemplate, type TemplateResponseDTO, WsAuth };
 
 const WsAuth = async (baseUrl: WsBaseURL, login: AuthRequest, userPersistentId?: string) =>
     await FnWithInstrumentation(
-        () => authMethod({ token: "future", baseUrl }, login),
+        () => authMethod(baseUrl, login),
         {
             sessionId: "",
             userPersistentId: userPersistentId ?? "",

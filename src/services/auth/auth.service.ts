@@ -8,24 +8,22 @@
 import { parseApiInput, parseApiResponse } from "~util/validate_schema.ts";
 
 import { type AuthRequest, AuthRequestSchema, type AuthResponse, AuthResponseSchema } from "./auth.dto.ts";
-import type { WsMethodContext, WsResponseModel } from "~type/ws_config.type.ts";
+import type { WsResponseModel } from "~type/ws_config.type.ts";
 
 export { authMethod };
 
 async function authMethod(
-    ctx: WsMethodContext,
+    baseWsUrl: string,
     { cpfCnpj, senha, unidade }: AuthRequest,
 ): Promise<AuthResponse> {
-    if (!ctx.baseUrl) throw new Error("Base URL ausente");
-    if (!ctx.token) throw new Error("Token ausente");
+    if (!baseWsUrl) throw new Error("Base URL ausente");
 
     const input = parseApiInput(AuthRequestSchema, { cpfCnpj, senha, unidade });
 
-    const endpoint = `${ctx.baseUrl}/gettoken/`;
+    const endpoint = `${baseWsUrl}/gettoken/`;
     const response = await fetch(endpoint, {
         method: "POST",
         headers: {
-            "Authorization": ctx.token,
             "Content-Type": "application/json",
         },
         body: input,
