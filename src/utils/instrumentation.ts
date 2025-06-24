@@ -10,7 +10,13 @@ import { logger } from "~logger";
 import { ulid } from "@ulid";
 import type { WsUserRole } from "~type/ws_config.type.ts";
 
-export { FnWithInstrumentation };
+export { FnWithInstrumentation, type MetadataForInstrumentation };
+
+interface MetadataForInstrumentation {
+    sessionId: string;
+    userPersistentId: string;
+    userRole: WsUserRole;
+}
 
 /**
  * Aplica instrumentação completa sobre uma função e a executa.
