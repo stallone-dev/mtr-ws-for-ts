@@ -7,7 +7,6 @@
 
 import type { WsClientConfig } from "~type/ws_config.type.ts";
 import { BaseMtrWsClient } from "~class/base.class.ts";
-import { FnWithInstrumentation } from "~util/instrumentation.ts";
 
 export { GeradorClient };
 
@@ -18,18 +17,4 @@ class GeradorClient extends BaseMtrWsClient {
             throw new Error("Incompatible role for GeradorClient");
         }
     }
-
-    // public async methodTemplate(mtrId: string): Promise<TemplateResponseDTO> {
-    //     return await FnWithInstrumentation(
-    //         () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
-    //         {
-    //             sessionId: this.sessionId,
-    //             userPersistentId: this.userPersistentId,
-    //             userRole: "GERADOR",
-    //             spanName: "Gerador.methodTemplate",
-    //         },
-    //         "template",
-    //         { mtrId },
-    //     );
-    // }
 }
