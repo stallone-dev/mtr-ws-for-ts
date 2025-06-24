@@ -80,7 +80,7 @@ export {
      *
      * const client = await createMtrWsClient(clientConfig);
      *
-     * const mtrResiduosIbama = await client.listarResiduosIbama();
+     * const mtrResiduosIbama = await client.consult.listarResiduosIbama();
      * ```
      *
      * ---
