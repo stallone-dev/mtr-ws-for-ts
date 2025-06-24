@@ -14,6 +14,7 @@ type ConsultarMtrRequest = z.infer<typeof ConsultarMtrRequestSchema>;
 
 const ConsultarMtrResponseSchema = z.object({
     manNumero: z.string(),
+    manData: z.number(),
     manResponsavel: z.string(),
     manDataExpedicao: z.number().or(z.null()),
     manNomeMotorista: z.string(),
@@ -91,7 +92,10 @@ const ConsultarMtrResponseSchema = z.object({
             marNumeroONU: z.string().or(z.null()),
             marClasseRisco: z.string().or(z.null()),
             marNomeEmbarque: z.string().or(z.null()),
-            greCodigo: z.number().or(z.null()).optional(),
+            grupoEmbalagem: z.object({
+                greCodigo: z.number(),
+                greDescreicao: z.string(),
+            }).or(z.null()),
             marDescricaoInterna: z.string().or(z.null()),
             marCodigoInterno: z.string().or(z.null()),
         }),

@@ -51,7 +51,7 @@ describe("[DOWNLOAD] - Download MTR", () => {
             destinationFolder: "./log",
         });
         expect(result).not.toThrow();
-        expect(infoSpy.calls.length).toStrictEqual(4);
+        expect(infoSpy.calls.length).toStrictEqual(6);
     });
 
     it("> Basic request > MTR NOT EXISTS", async () => {
@@ -62,7 +62,7 @@ describe("[DOWNLOAD] - Download MTR", () => {
         });
         await expect(result).rejects.toThrow();
         expect(result).not.toThrow();
-        expect(infoSpy.calls.length).toStrictEqual(5);
+        expect(infoSpy.calls.length).toStrictEqual(7);
     });
 
     it("> Invalid token", async () => {
@@ -73,7 +73,7 @@ describe("[DOWNLOAD] - Download MTR", () => {
         }))
             .rejects
             .toThrow(/Unauthorized/);
-        expect(infoSpy.calls.length).toStrictEqual(6);
+        expect(infoSpy.calls.length).toStrictEqual(8);
     });
 
     it("> Invalid URL", async () => {
@@ -86,6 +86,6 @@ describe("[DOWNLOAD] - Download MTR", () => {
         )
             .rejects
             .toThrow(/Invalid URL/);
-        expect(infoSpy.calls.length).toStrictEqual(7);
+        expect(infoSpy.calls.length).toStrictEqual(9);
     });
 });
