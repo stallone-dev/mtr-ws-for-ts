@@ -9,8 +9,6 @@ import type { WsClientConfig } from "~type/ws_config.type.ts";
 import { BaseMtrWsClient } from "~class/base.class.ts";
 import { FnWithInstrumentation } from "~util/instrumentation.ts";
 
-import { methodTemplate, type TemplateResponseDTO } from "~service/main.service.ts";
-
 export { TransportadorClient };
 
 class TransportadorClient extends BaseMtrWsClient {
@@ -21,17 +19,17 @@ class TransportadorClient extends BaseMtrWsClient {
         }
     }
 
-    public async methodTemplate(mtrId: string): Promise<TemplateResponseDTO> {
-        return await FnWithInstrumentation(
-            () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
-            {
-                sessionId: this.sessionId,
-                userPersistentId: this.userPersistentId,
-                userRole: "TRANSPORTADOR",
-                spanName: "Transportador.methodTemplate",
-            },
-            "template",
-            { mtrId },
-        );
-    }
+    // public async methodTemplate(mtrId: string): Promise<TemplateResponseDTO> {
+    //     return await FnWithInstrumentation(
+    //         () => methodTemplate({ token: this.token, baseUrl: this.baseUrl }, mtrId),
+    //         {
+    //             sessionId: this.sessionId,
+    //             userPersistentId: this.userPersistentId,
+    //             userRole: "TRANSPORTADOR",
+    //             spanName: "Transportador.methodTemplate",
+    //         },
+    //         "template",
+    //         { mtrId },
+    //     );
+    // }
 }

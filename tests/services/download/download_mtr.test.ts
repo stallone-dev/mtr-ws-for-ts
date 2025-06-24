@@ -43,6 +43,17 @@ describe("[DOWNLOAD] - Download MTR", () => {
         expect(infoSpy.calls.length).toStrictEqual(4);
     });
 
+    it("> Basic request > VALID MTR WITH DONWLOAD MTR", async () => {
+        const consultTestFn = instrumentationSupportForTests(downloadMTRMethod);
+
+        const result = await consultTestFn({ baseUrl, token }, {
+            mtrId: String(Deno.env.get("TEST_MTR")),
+            destinationFolder: "./log",
+        });
+        expect(result).not.toThrow();
+        expect(infoSpy.calls.length).toStrictEqual(4);
+    });
+
     it("> Basic request > MTR NOT EXISTS", async () => {
         const consultTestFn = instrumentationSupportForTests(downloadMTRMethod);
 

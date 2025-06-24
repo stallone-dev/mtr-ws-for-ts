@@ -43,6 +43,17 @@ describe("[DOWNLOAD] - Download CDF", () => {
         expect(infoSpy.calls.length).toStrictEqual(4);
     });
 
+    it("> Basic request > VALID CDF WITH FILE DOWNLOAD", async () => {
+        const consultTestFn = instrumentationSupportForTests(downloadCDFMethod);
+
+        const result = await consultTestFn({ baseUrl, token }, {
+            cdfId: String(Deno.env.get("TEST_CDF")),
+            destinationFolder: "./log",
+        });
+        expect(result).not.toThrow();
+        expect(infoSpy.calls.length).toStrictEqual(4);
+    });
+
     it("> Basic request > CDF NOT EXISTS", async () => {
         const consultTestFn = instrumentationSupportForTests(downloadCDFMethod);
 
