@@ -13,9 +13,9 @@ describe("[CLIENT INSTANCE]", () => {
 
     const configMock = {
         baseWebServer: "SINIR",
-        cpf: env.SINIR_CPF_ADMIN,
-        unidade: env.SINIR_UNIDADE,
-        senha: env.SINIR_PASSWORD,
+        cpf: env.TEST_SINIR_CPF_ADMIN,
+        unidade: env.TEST_SINIR_UNIDADE,
+        senha: env.TEST_SINIR_PASSWORD,
         persistentId: "teste",
     } as const;
 

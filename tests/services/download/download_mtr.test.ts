@@ -19,9 +19,9 @@ describe("[DOWNLOAD] - Download MTR", () => {
     before(async () => {
         const env = Deno.env.toObject();
         const login = {
-            cpfCnpj: env.SINIR_CPF_ADMIN,
-            senha: env.SINIR_PASSWORD,
-            unidade: env.SINIR_UNIDADE,
+            cpfCnpj: env.TEST_SINIR_CPF_ADMIN,
+            senha: env.TEST_SINIR_PASSWORD,
+            unidade: env.TEST_SINIR_UNIDADE,
         } as AuthRequest;
 
         token = await WsAuth(baseUrl, login, "TEST");
