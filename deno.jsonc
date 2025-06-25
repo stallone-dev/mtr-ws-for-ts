@@ -42,7 +42,7 @@
     // },
 
     // ======= JSR publish area =======
-    "name": "mtr-ws-wrapper-ts",
+    "name": "@mtr-ws/mtr-ws-wrapper-ts",
     "version": "0.1.0",
     "exports": "./mod.ts",
     "license": "MPL-2.0",
