@@ -94,7 +94,7 @@ const ConsultarMtrResponseSchema = z.object({
             marNomeEmbarque: z.string().or(z.null()),
             grupoEmbalagem: z.object({
                 greCodigo: z.number(),
-                greDescreicao: z.string(),
+                greDescricao: z.string(),
             }).or(z.null()),
             marDescricaoInterna: z.string().or(z.null()),
             marCodigoInterno: z.string().or(z.null()),

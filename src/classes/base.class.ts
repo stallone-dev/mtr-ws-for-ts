@@ -46,7 +46,7 @@ abstract class BaseMtrWsClient {
         this.download = createDownloadMethods(this._ctx, this._metaData);
     }
 
-    public static async create<T extends BaseMtrWsClient>(
+    public static async init<T extends BaseMtrWsClient>(
         this: new (params: WsClientConfig, token: string) => T,
         params: WsClientConfig,
     ): Promise<T> {

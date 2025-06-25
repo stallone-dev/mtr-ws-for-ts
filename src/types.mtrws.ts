@@ -8,6 +8,7 @@
 import type * as ConsultInterface from "~service/consult/consult.types.ts";
 import type * as DownloadInterface from "~service/download/download.types.ts";
 import type * as ReceiveInterface from "~service/receive/receive.types.ts";
+import type * as CreateInterface from "~service/create/create.types.ts";
 import type { WsClientConfig as WsClientInterface } from "~type/ws_config.type.ts";
 
-export type { ConsultInterface, DownloadInterface, ReceiveInterface, WsClientInterface };
+export type { ConsultInterface, CreateInterface, DownloadInterface, ReceiveInterface, WsClientInterface };
