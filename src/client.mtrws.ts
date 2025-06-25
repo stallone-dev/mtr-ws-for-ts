@@ -23,11 +23,11 @@ async function createMtrWsClient<T extends WsUserRole>(
 > {
     switch (config.role) {
         case "GERADOR":
-            return await GeradorClient.create(config) as any;
+            return await GeradorClient.init(config) as any;
         case "DESTINADOR":
-            return await DestinadorClient.create(config) as any;
+            return await DestinadorClient.init(config) as any;
         case "TRANSPORTADOR":
-            return await TransportadorClient.create(config) as any;
+            return await TransportadorClient.init(config) as any;
         default:
             throw new Error("Role não suportado");
     }
