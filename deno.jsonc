@@ -42,14 +42,13 @@
     // },
 
     // ======= JSR publish area =======
-    "name": "mtr-ws-for-ts",
-    "version": "0.0.1",
+    "name": "mtr-ws-wrapper-ts",
+    "version": "0.1.0",
     "exports": "./mod.ts",
     "license": "MPL-2.0",
 
     "publish": {
-        "exclude": ["./tests", ".editorconfig", ".vscode", ".github", ".zed", ".env*"],
-        "include": ["LICENSE", "README.md"]
+        "exclude": ["./tests", ".editorconfig", ".vscode", ".github", ".zed", ".env*"]
     },
 
     // ======= Source code standardization area =======
